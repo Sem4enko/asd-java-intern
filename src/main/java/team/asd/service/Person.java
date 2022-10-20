@@ -21,8 +21,8 @@ public class Person implements IsPersonService {
 
     @Override
     public @NonNull Map<Integer, List<IsPerson>> collectPersonsByAge(List<IsPerson> personList) {
-        if (personList == null) {
-            return new HashMap<>();
+        if (CollectionUtils.isEmpty(personList)) {
+            return Collections.emptyMap();
         }
         return personList.stream()
                 .filter(n -> n != null && n.getAge() != null && n.getAge() >= 0)
@@ -33,18 +33,19 @@ public class Person implements IsPersonService {
 
     @Override
     public @NonNull Double calculateAverageAge(List<IsPerson> personList) {
-        if (personList == null) {
+        if (CollectionUtils.isEmpty(personList)) {
             return 0.0d;
         }
         return personList.stream()
                 .filter(n -> n != null && n.getAge() != null && n.getAge() >= 0)
                 .mapToDouble(IsPerson::getAge)
-                .average().getAsDouble();
+                .average()
+                .getAsDouble();
     }
 
     @Override
     public @NonNull IntSummaryStatistics sumAndCountAge(List<IsPerson> personList) {
-        if (personList == null)
+        if (CollectionUtils.isEmpty(personList))
             return new IntSummaryStatistics();
         return personList.stream()
                 .filter(p -> p != null && p.getAge() != null && p.getAge() >= 0)
