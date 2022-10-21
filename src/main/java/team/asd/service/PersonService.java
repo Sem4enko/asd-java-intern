@@ -29,7 +29,6 @@ public class PersonService implements IsPersonService {
                 .filter(n -> n != null && n.getAge() != null && n.getAge() >= 0)
                 .sorted(Comparator.comparing(IsPerson::getAge))
                 .collect(Collectors.groupingBy(IsPerson::getAge));
-
     }
 
     @Override
