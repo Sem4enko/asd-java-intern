@@ -11,10 +11,11 @@ import java.util.stream.Collectors;
 public class PersonService implements IsPersonService {
     @Override
     public @NonNull List<IsPerson> collectPersonsWithNameStartsWith(List<IsPerson> personList, String prefix) {
-        if (CollectionUtils.isEmpty(personList))
+        if (CollectionUtils.isEmpty(personList)) {
             return Collections.emptyList();
-        if (StringUtils.isEmpty(prefix))
+        } else if (StringUtils.isEmpty(prefix)) {
             return personList;
+        }
         return personList.stream()
                 .filter(p -> p != null && p.getName() != null && p.getName().startsWith(prefix))
                 .collect(Collectors.toList());
@@ -45,8 +46,9 @@ public class PersonService implements IsPersonService {
 
     @Override
     public @NonNull IntSummaryStatistics sumAndCountAge(List<IsPerson> personList) {
-        if (CollectionUtils.isEmpty(personList))
+        if (CollectionUtils.isEmpty(personList)) {
             return new IntSummaryStatistics();
+        }
         return personList.stream()
                 .filter(p -> p != null && p.getAge() != null && p.getAge() >= 0)
                 .mapToInt(IsPerson::getAge)
