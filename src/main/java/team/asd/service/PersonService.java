@@ -2,17 +2,18 @@ package team.asd.service;
 
 import lombok.NonNull;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import team.asd.entities.IsPerson;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Person implements IsPersonService {
+public class PersonService implements IsPersonService {
     @Override
     public @NonNull List<IsPerson> collectPersonsWithNameStartsWith(List<IsPerson> personList, String prefix) {
-         if (CollectionUtils.isEmpty(personList))
+        if (CollectionUtils.isEmpty(personList))
             return Collections.emptyList();
-        if (prefix.isEmpty())
+        if (StringUtils.isEmpty(prefix))
             return personList;
         return personList.stream()
                 .filter(p -> p != null && p.getName() != null && p.getName().startsWith(prefix))
