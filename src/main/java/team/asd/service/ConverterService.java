@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 
-public class Converter implements IsConverterService {
+public class ConverterService implements IsConverterService {
 
     @Override
     public String convertIntegerIntoString(Integer value) {
