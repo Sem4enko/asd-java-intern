@@ -32,7 +32,7 @@ public interface IsProductService {
 	 * Calculates count of products by each state.
 	 *
 	 * @param productList list of product items
-	 * @return map of product count count by state
+	 * @return map of product count by state
 	 * @throws WrongProductException in case when wrong product entity was provided
 	 * @see ProductState
 	 */
