@@ -18,7 +18,8 @@ import static team.asd.constants.ProductState.Created;
 public class ProductService implements IsProductService {
 
 	private void checkProducts(List<IsProduct> list) throws WrongProductException {
-		if (CollectionUtils.isNotEmpty(list) && list.contains(null)) {
+		if (list.stream()
+				.anyMatch(Objects::isNull)) {
 			throw new WrongProductException("Product cannot be null");
 		}
 	}
@@ -60,15 +61,20 @@ public class ProductService implements IsProductService {
 
 	@Override
 	public @NonNull Map<ProductState, Integer> calculateProductCountByState(List<IsProduct> productList) throws WrongProductException {
+		Map<ProductState, Integer> map = new HashMap<>();
+
+		if (CollectionUtils.isEmpty(productList)) {
+			for (ProductState s : ProductState.values()) {
+				map.put(s, null);
+			}
+			return map;
+		}
 
 		checkProducts(productList);
-
-		Map<ProductState, Integer> map = new HashMap<>();
 
 		for (ProductState s : ProductState.values()) {
 			map.put(s, (int) countProductByState(productList, s));
 		}
-
 		return map;
 	}
 
