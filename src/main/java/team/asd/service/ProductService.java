@@ -23,11 +23,11 @@ public class ProductService implements IsProductService {
 		}
 	}
 
-	private long countProductByState(List<IsProduct> productList, ProductState state) throws WrongProductException {
+	private long countProductByState(List<IsProduct> productList, ProductState state) {
 		if (CollectionUtils.isEmpty(productList)) {
 			return 0L;
 		}
-		checkProducts(productList);
+
 		return productList.stream()
 				.filter(product -> product.getState()
 						.equals(state))
@@ -41,7 +41,6 @@ public class ProductService implements IsProductService {
 		}
 		checkProducts(productList);
 		return productList.stream()
-				.filter(Objects::nonNull)
 				.map(IsProduct::getName)
 				.collect(Collectors.toList());
 	}
@@ -51,6 +50,7 @@ public class ProductService implements IsProductService {
 		if (CollectionUtils.isEmpty(productList)) {
 			return Collections.emptyList();
 		}
+
 		return productList.stream()
 				.filter(Objects::nonNull)
 				.filter(element -> element.getState()
@@ -60,6 +60,8 @@ public class ProductService implements IsProductService {
 
 	@Override
 	public @NonNull Map<ProductState, Integer> calculateProductCountByState(List<IsProduct> productList) throws WrongProductException {
+
+		checkProducts(productList);
 
 		Map<ProductState, Integer> map = new HashMap<>();
 
@@ -79,7 +81,6 @@ public class ProductService implements IsProductService {
 		}
 		checkProducts(productList);
 		return productList.stream()
-				.filter(Objects::nonNull)
 				.filter(element -> product.getName() == null || element.getName()
 						.equals(product.getName()))
 				.filter(element -> product.getState() == null || element.getState()
