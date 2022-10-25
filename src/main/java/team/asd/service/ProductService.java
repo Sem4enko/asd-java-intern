@@ -13,10 +13,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static team.asd.constants.ProductState.Created;
-
 public class ProductService implements IsProductService {
-
 	private void checkProducts(List<IsProduct> list) throws WrongProductException {
 		if (list.stream()
 				.anyMatch(Objects::isNull)) {
@@ -54,8 +51,7 @@ public class ProductService implements IsProductService {
 
 		return productList.stream()
 				.filter(Objects::nonNull)
-				.filter(element -> element.getState()
-						.equals(Created))
+				.filter(e -> ProductState.Created.equals(e.getState()))
 				.collect(Collectors.toList());
 	}
 
