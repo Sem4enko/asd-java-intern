@@ -51,6 +51,16 @@ public class PriceService implements IsPriceService {
 			throw new WrongPriceException("Wrong price or date was provided");
 		}
 
+		if (prices.stream()
+				.anyMatch(price -> prices.stream()
+						.anyMatch(nextPrice -> (nextPrice.getFromDate()
+								.isAfter(price.getFromDate()) && nextPrice.getFromDate()
+								.isBefore(price.getToDate())) || (nextPrice.getToDate()
+								.isAfter(price.getFromDate()) && nextPrice.getToDate()
+								.isBefore(price.getToDate()))))) {
+			throw new WrongPriceException("Price dates are collides");
+		}
+
 		return sumOfValue(prices).divide(sumOfDuration(prices), RoundingMode.HALF_DOWN);
 	}
 
