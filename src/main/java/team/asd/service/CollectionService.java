@@ -14,7 +14,6 @@ public class CollectionService implements IsCollectionService {
 	public List<Object> unmodifiableList(Object... objects) {
 		return Arrays.stream(objects)
 				.collect(Collectors.toUnmodifiableList());
-
 	}
 
 	@Override
