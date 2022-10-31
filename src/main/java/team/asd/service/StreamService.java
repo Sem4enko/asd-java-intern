@@ -28,7 +28,7 @@ public class StreamService implements IsStreamApiService {
 
 	@Override
 	public @NonNull List<Integer> defineListFromRange(Integer start, Integer end) throws NumberFormatException {
-		if (ObjectUtils.allNull(start, end)) {
+		if (ObjectUtils.anyNull(start, end)) {
 			return Collections.emptyList();
 		}
 
