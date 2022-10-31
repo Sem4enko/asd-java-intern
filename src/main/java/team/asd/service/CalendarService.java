@@ -10,8 +10,8 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.WeekFields;
 import java.util.Locale;
 
 public class CalendarService implements IsCalendarService {
@@ -50,7 +50,8 @@ public class CalendarService implements IsCalendarService {
 			return date.getDayOfWeek()
 					.name();
 		case WEEK_NUMBER:
-			return String.valueOf(date.get(ChronoField.ALIGNED_WEEK_OF_YEAR));
+			return String.valueOf(date.get(WeekFields.of(Locale.getDefault())
+					.weekOfWeekBasedYear()));
 		case MONTH:
 			return date.getMonth()
 					.toString();
