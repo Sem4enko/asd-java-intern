@@ -4,11 +4,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.reflections.Reflections;
+import team.asd.tutorials.entities.TestProduct;
 import team.asd.tutorials.data.ProductData;
 import team.asd.tutorials.constants.ProductState;
 import team.asd.tutorials.engine.ServicesScannerUtils;
 import team.asd.tutorials.entities.IsProduct;
-import team.asd.tutorials.entities.TestProduct;
 import team.asd.tutorials.exceptions.WrongProductException;
 
 import java.util.ArrayList;

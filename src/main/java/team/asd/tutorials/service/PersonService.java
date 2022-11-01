@@ -4,7 +4,6 @@ import lombok.NonNull;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import team.asd.tutorials.entities.IsPerson;
-import team.asd.tutorials.service.IsPersonService;
 
 import java.util.*;
 import java.util.stream.Collectors;

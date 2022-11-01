@@ -1,9 +1,9 @@
 package team.asd.tutorials.data;
 
 
+import team.asd.tutorials.entities.TestProduct;
 import team.asd.tutorials.constants.ProductState;
 import team.asd.tutorials.entities.IsProduct;
-import team.asd.tutorials.entities.TestProduct;
 
 import java.util.List;
 import java.util.Random;

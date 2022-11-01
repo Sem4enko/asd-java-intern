@@ -2,10 +2,9 @@ package team.asd.tutorials.service;
 
 import lombok.NonNull;
 import org.apache.commons.collections4.CollectionUtils;
+import team.asd.tutorials.exceptions.WrongPriceException;
 import team.asd.tutorials.entities.IsPerDayPrice;
 import team.asd.tutorials.entities.IsPrice;
-import team.asd.tutorials.exceptions.WrongPriceException;
-import team.asd.tutorials.service.IsPriceService;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

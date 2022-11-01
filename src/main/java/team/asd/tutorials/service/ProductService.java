@@ -3,9 +3,8 @@ package team.asd.tutorials.service;
 import lombok.NonNull;
 import org.apache.commons.collections4.CollectionUtils;
 import team.asd.tutorials.constants.ProductState;
-import team.asd.tutorials.entities.IsProduct;
 import team.asd.tutorials.exceptions.WrongProductException;
-import team.asd.tutorials.service.IsProductService;
+import team.asd.tutorials.entities.IsProduct;
 
 import java.util.Collections;
 import java.util.HashMap;

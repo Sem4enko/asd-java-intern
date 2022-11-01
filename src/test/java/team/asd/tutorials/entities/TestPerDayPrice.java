@@ -1,7 +1,5 @@
 package team.asd.tutorials.entities;
 
-import team.asd.tutorials.entities.IsPerDayPrice;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
