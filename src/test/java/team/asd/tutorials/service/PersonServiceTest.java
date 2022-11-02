@@ -4,9 +4,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.reflections.Reflections;
+import team.asd.tutorials.entities.TestPerson;
 import team.asd.tutorials.engine.ServicesScannerUtils;
 import team.asd.tutorials.entities.IsPerson;
-import team.asd.tutorials.entities.TestPerson;
 
 import java.util.Arrays;
 import java.util.IntSummaryStatistics;

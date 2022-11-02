@@ -52,3 +52,6 @@ Thumbs.db
 
 /data/
 /.github/
+.mvn
+mvnw
+mvnw.cmd

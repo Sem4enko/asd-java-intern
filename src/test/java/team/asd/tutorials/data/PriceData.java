@@ -1,10 +1,10 @@
 package team.asd.tutorials.data;
 
+import team.asd.tutorials.entities.TestPerDayPrice;
+import team.asd.tutorials.entities.TestPrice;
 import team.asd.tutorials.constants.Currency;
 import team.asd.tutorials.entities.IsPerDayPrice;
 import team.asd.tutorials.entities.IsPrice;
-import team.asd.tutorials.entities.TestPerDayPrice;
-import team.asd.tutorials.entities.TestPrice;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

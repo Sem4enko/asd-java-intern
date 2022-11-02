@@ -1,7 +1,6 @@
 package team.asd.tutorials.entities;
 
 import team.asd.tutorials.constants.ProductState;
-import team.asd.tutorials.entities.IsProduct;
 
 public class TestProduct implements IsProduct {
 
