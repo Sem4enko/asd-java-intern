@@ -1,4 +1,4 @@
-package team.asd.controller;
+package team.asd.entity;
 
 import lombok.Data;
 
