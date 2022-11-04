@@ -13,7 +13,7 @@ public class PaymentTransaction {
 	private Integer id;
 	private Integer paymentProvider;
 	private LocalDate createdDate;
-	private Integer reservation_Id;
+	private Integer reservationId;
 	private PaymentTransactionFundsHolder fundsHolder;
 	private String partialIin;
 	private PaymentTransactionStatus status;
