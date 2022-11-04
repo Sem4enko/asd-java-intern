@@ -10,12 +10,12 @@ public class PaymentTransactionService implements PaymentTransactionDao {
 	}
 
 	@Override
-	public PaymentTransaction create(Integer id) {
+	public PaymentTransaction create(PaymentTransaction paymentTransaction) {
 		return null;
 	}
 
 	@Override
-	public PaymentTransaction update(Integer id) {
+	public PaymentTransaction update(PaymentTransaction paymentTransaction) {
 		return null;
 	}
 
