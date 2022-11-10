@@ -3,7 +3,7 @@ package team.asd.service;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import team.asd.constant.PaymentTransactionFundsHolder;
+import team.asd.constant.FundsHolderEnum;
 import team.asd.constant.PaymentTransactionStatus;
 import team.asd.dao.TestPaymentTransactionDao;
 import team.asd.entity.PaymentTransaction;
@@ -32,7 +32,7 @@ class PaymentTransactionServiceTest {
 				.paymentProvider(2)
 				.createdDate(LocalDate.now())
 				.reservationId(3)
-				.fundsHolder(PaymentTransactionFundsHolder.PropertyManager)
+				.fundsHolder(FundsHolderEnum.PropertyManager)
 				.status(PaymentTransactionStatus.Accepted)
 				.currency("USD")
 				.build();

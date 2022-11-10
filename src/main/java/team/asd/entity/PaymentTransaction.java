@@ -3,7 +3,7 @@ package team.asd.entity;
 import lombok.Builder;
 import lombok.Data;
 import team.asd.constant.PaymentTransactionChargeType;
-import team.asd.constant.PaymentTransactionFundsHolder;
+import team.asd.constant.FundsHolderEnum;
 import team.asd.constant.PaymentTransactionStatus;
 
 import java.time.LocalDate;
@@ -16,7 +16,7 @@ public class PaymentTransaction {
 	private Integer paymentProvider;
 	private LocalDate createdDate;
 	private Integer reservationId;
-	private PaymentTransactionFundsHolder fundsHolder;
+	private FundsHolderEnum fundsHolder;
 	private String partialIin;
 	private PaymentTransactionStatus status;
 	private String message;
