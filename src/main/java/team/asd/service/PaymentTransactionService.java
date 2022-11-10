@@ -1,26 +1,51 @@
 package team.asd.service;
 
+import org.apache.commons.lang3.ObjectUtils;
 import team.asd.dao.PaymentTransactionDao;
 import team.asd.entity.PaymentTransaction;
+import team.asd.exception.ValidationException;
 
-public class PaymentTransactionService implements PaymentTransactionDao {
-	@Override
-	public PaymentTransaction readById(Integer id) {
-		return null;
+import java.util.Objects;
+
+public class PaymentTransactionService {
+
+	PaymentTransactionDao paymentTransactionDao;
+
+	public PaymentTransactionService(PaymentTransactionDao paymentTransactionDao) {
+		this.paymentTransactionDao = paymentTransactionDao;
 	}
 
-	@Override
-	public PaymentTransaction create(PaymentTransaction paymentTransaction) {
-		return null;
+	public PaymentTransaction readById(Integer id) throws ValidationException {
+		checkId(id);
+		return paymentTransactionDao.readById(id);
 	}
 
-	@Override
-	public PaymentTransaction update(PaymentTransaction paymentTransaction) {
-		return null;
+	public PaymentTransaction create(PaymentTransaction paymentTransaction) throws ValidationException {
+		checkPaymentTransaction(paymentTransaction);
+		return paymentTransactionDao.create(paymentTransaction);
 	}
 
-	@Override
-	public void delete(Integer id) {
+	public PaymentTransaction update(PaymentTransaction paymentTransaction) throws ValidationException {
+		checkPaymentTransaction(paymentTransaction);
+		return paymentTransactionDao.update(paymentTransaction);
+	}
 
+	public void delete(Integer id) throws ValidationException {
+		checkId(id);
+		paymentTransactionDao.delete(id);
+	}
+
+	private void checkId(Integer id) throws ValidationException {
+		if (ObjectUtils.isEmpty(id) || id <= 0) {
+			throw new ValidationException("Wrong id was provided");
+		}
+	}
+
+	private void checkPaymentTransaction(PaymentTransaction paymentTransaction) throws ValidationException {
+		if (Objects.isNull(paymentTransaction) || ObjectUtils.anyNull(paymentTransaction.getPaymentProvider(), paymentTransaction.getCreatedDate(),
+				paymentTransaction.getReservationId(), paymentTransaction.getFundsHolder(), paymentTransaction.getStatus(), paymentTransaction.getCurrency())) {
+			throw new ValidationException("Wrong field was provided");
+		}
+		checkId(paymentTransaction.getId());
 	}
 }

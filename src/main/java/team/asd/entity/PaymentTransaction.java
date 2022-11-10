@@ -1,14 +1,16 @@
 package team.asd.entity;
 
+import lombok.Builder;
 import lombok.Data;
 import team.asd.constant.PaymentTransactionChargeType;
 import team.asd.constant.PaymentTransactionFundsHolder;
 import team.asd.constant.PaymentTransactionStatus;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
+@Builder
 public class PaymentTransaction {
 	private Integer id;
 	private Integer paymentProvider;
@@ -27,5 +29,5 @@ public class PaymentTransaction {
 	private Double creditCardFee;
 	private Double finalAmount;
 	private PaymentTransactionChargeType chargeType;
-	private Date version;
+	private LocalDateTime version;
 }
