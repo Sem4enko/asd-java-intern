@@ -26,7 +26,7 @@ class PaymentTransactionServiceTest {
 	}
 
 	@BeforeEach
-	public void initParty() {
+	public void initPaymentTransaction() {
 		paymentTransaction = PaymentTransaction.builder()
 				.id(1)
 				.paymentProvider(2)

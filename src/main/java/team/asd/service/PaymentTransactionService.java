@@ -26,7 +26,7 @@ public class PaymentTransactionService {
 	}
 
 	public PaymentTransaction update(PaymentTransaction paymentTransaction) throws ValidationException {
-		checkPaymentTransaction(paymentTransaction);
+		checkId(paymentTransaction.getId());
 		return paymentTransactionDao.update(paymentTransaction);
 	}
 
