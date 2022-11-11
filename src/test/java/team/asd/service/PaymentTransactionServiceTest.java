@@ -84,11 +84,6 @@ class PaymentTransactionServiceTest {
 	}
 
 	@Test
-	void testUpdateWithNull() {
-		assertThrows(ValidationException.class, () -> paymentTransactionService.update(null), "Validation exception should be thrown");
-	}
-
-	@Test
 	void testCheckPaymentTransactionNull() {
 		paymentTransaction.setId(null);
 		assertThrows(ValidationException.class, () -> paymentTransactionService.create(paymentTransaction), "Validation exception should be thrown");
