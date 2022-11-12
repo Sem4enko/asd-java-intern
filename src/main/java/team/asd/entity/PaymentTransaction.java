@@ -7,7 +7,6 @@ import team.asd.constant.FundsHolderEnum;
 import team.asd.constant.PaymentTransactionStatus;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -29,5 +28,5 @@ public class PaymentTransaction {
 	private Double creditCardFee;
 	private Double finalAmount;
 	private PaymentTransactionChargeType chargeType;
-	private LocalDateTime version;
+	private LocalDate version;
 }
