@@ -106,9 +106,9 @@ public class ConverterUtil {
 		return Objects.isNull(fundsHolderEnum) ? null : fundsHolderEnum.getValue();
 	}
 
-	public static FundsHolderEnum convertIntegerToFundsHolder(Integer fundStatus) {
+	public static FundsHolderEnum convertIntegerToFundsHolder(Integer value) {
 		return Stream.of(FundsHolderEnum.values())
-				.filter(element -> element.getValue() == fundStatus)
+				.filter(element -> element.getValue() == value)
 				.findFirst()
 				.orElse(null);
 	}
