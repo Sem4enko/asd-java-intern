@@ -63,6 +63,4 @@ public class PaymentTransactionDTO {
 	@JsonProperty("charge_type")
 	private String chargeType;
 
-	@JsonProperty("version")
-	private String version;
 }

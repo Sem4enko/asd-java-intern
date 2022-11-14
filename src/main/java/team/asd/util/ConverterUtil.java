@@ -38,7 +38,6 @@ public class ConverterUtil {
 				.creditCardFee(paymentTransactionDTO.getCreditCardFee())
 				.finalAmount(paymentTransactionDTO.getFinalAmount())
 				.chargeType(convertStringToChargeType(paymentTransactionDTO.getChargeType()))
-				.version(convertStringToLocalDate(paymentTransactionDTO.getVersion()))
 				.build();
 	}
 
@@ -64,7 +63,6 @@ public class ConverterUtil {
 				.creditCardFee(paymentTransaction.getCreditCardFee())
 				.finalAmount(paymentTransaction.getFinalAmount())
 				.chargeType(convertChargeTypeToString(paymentTransaction.getChargeType()))
-				.version(convertLocalDateToString(paymentTransaction.getVersion()))
 				.build();
 	}
 
@@ -105,12 +103,12 @@ public class ConverterUtil {
 	}
 
 	public static Integer convertFundsHolderToInteger(FundsHolderEnum fundsHolderEnum) {
-		return Objects.isNull(fundsHolderEnum) ? null : fundsHolderEnum.getFundStatus();
+		return Objects.isNull(fundsHolderEnum) ? null : fundsHolderEnum.getValue();
 	}
 
 	public static FundsHolderEnum convertIntegerToFundsHolder(Integer fundStatus) {
 		return Stream.of(FundsHolderEnum.values())
-				.filter(element -> element.getFundStatus() == fundStatus)
+				.filter(element -> element.getValue() == fundStatus)
 				.findFirst()
 				.orElse(null);
 	}
