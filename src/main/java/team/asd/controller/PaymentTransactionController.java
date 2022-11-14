@@ -1,5 +1,6 @@
 package team.asd.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,50 +17,39 @@ import team.asd.entity.PaymentTransaction;
 import team.asd.service.PaymentTransactionService;
 import team.asd.util.ConverterUtil;
 
+import javax.validation.Valid;
 import java.util.Objects;
 
 @RestController
 @RequestMapping("/payment_transaction")
 public class PaymentTransactionController {
-	private final PaymentTransactionService paymentTransactionService = new PaymentTransactionService(null);
+	private final PaymentTransactionService paymentTransactionService;
+
+	@Autowired
+	public PaymentTransactionController(PaymentTransactionService paymentTransactionService) {
+		this.paymentTransactionService = paymentTransactionService;
+	}
 
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> getPaymentTransactionById(@PathVariable(value = "id") Integer id) {
-		try {
-			return new ResponseEntity<>(ConverterUtil.convertToDto(paymentTransactionService.readById(id)), HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-		}
+		return new ResponseEntity<>(ConverterUtil.convertToDto(paymentTransactionService.readById(id)), HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> createPaymentTransaction(@RequestBody PaymentTransactionDTO paymentTransactionDTO) {
-		try {
-			PaymentTransaction paymentTransaction = paymentTransactionService.create(ConverterUtil.convertToEntity(paymentTransactionDTO));
-			return new ResponseEntity<>(ConverterUtil.convertToDto(paymentTransaction), HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-		}
+	public ResponseEntity<Object> createPaymentTransaction(@RequestBody @Valid PaymentTransactionDTO paymentTransactionDTO) {
+		PaymentTransaction paymentTransaction = paymentTransactionService.create(ConverterUtil.convertToEntity(paymentTransactionDTO));
+		return new ResponseEntity<>(ConverterUtil.convertToDto(paymentTransaction), HttpStatus.OK);
 	}
 
 	@PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> updatePaymentTransaction(@RequestBody PaymentTransactionDTO paymentTransactionDTO) {
-		try {
-			PaymentTransaction paymentTransaction = paymentTransactionService.update(
-					Objects.requireNonNull(ConverterUtil.convertToEntity(paymentTransactionDTO)));
-			return new ResponseEntity<>(ConverterUtil.convertToDto(paymentTransaction), HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-		}
+	public ResponseEntity<Object> updatePaymentTransaction(@RequestBody  @Valid PaymentTransactionDTO paymentTransactionDTO) {
+		PaymentTransaction paymentTransaction = paymentTransactionService.update(Objects.requireNonNull(ConverterUtil.convertToEntity(paymentTransactionDTO)));
+		return new ResponseEntity<>(ConverterUtil.convertToDto(paymentTransaction), HttpStatus.OK);
 	}
 
 	@DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> deletePaymentTransaction(@PathVariable(value = "id") Integer id) {
-		try {
-			paymentTransactionService.delete(id);
-			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-		}
+		paymentTransactionService.delete(id);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
