@@ -1,19 +1,18 @@
 package team.asd.service;
 
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;
+import org.springframework.stereotype.Service;
 import team.asd.dao.PaymentTransactionDao;
 import team.asd.entity.PaymentTransaction;
 import team.asd.exception.ValidationException;
 
 import java.util.Objects;
 
+@Service
+@AllArgsConstructor
 public class PaymentTransactionService {
-
 	PaymentTransactionDao paymentTransactionDao;
-
-	public PaymentTransactionService(PaymentTransactionDao paymentTransactionDao) {
-		this.paymentTransactionDao = paymentTransactionDao;
-	}
 
 	public PaymentTransaction readById(Integer id) throws ValidationException {
 		checkId(id);

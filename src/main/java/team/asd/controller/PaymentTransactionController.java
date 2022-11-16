@@ -1,6 +1,6 @@
 package team.asd.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,13 +22,9 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/payment_transaction")
+@AllArgsConstructor
 public class PaymentTransactionController {
 	private final PaymentTransactionService paymentTransactionService;
-
-	@Autowired
-	public PaymentTransactionController(PaymentTransactionService paymentTransactionService) {
-		this.paymentTransactionService = paymentTransactionService;
-	}
 
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> getPaymentTransactionById(@PathVariable(value = "id") Integer id) {
@@ -42,7 +38,7 @@ public class PaymentTransactionController {
 	}
 
 	@PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> updatePaymentTransaction(@RequestBody  @Valid PaymentTransactionDTO paymentTransactionDTO) {
+	public ResponseEntity<Object> updatePaymentTransaction(@RequestBody @Valid PaymentTransactionDTO paymentTransactionDTO) {
 		PaymentTransaction paymentTransaction = paymentTransactionService.update(Objects.requireNonNull(ConverterUtil.convertToEntity(paymentTransactionDTO)));
 		return new ResponseEntity<>(ConverterUtil.convertToDto(paymentTransaction), HttpStatus.OK);
 	}
