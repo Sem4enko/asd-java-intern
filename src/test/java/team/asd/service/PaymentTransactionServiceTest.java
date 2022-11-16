@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import team.asd.constant.FundsHolderEnum;
 import team.asd.constant.PaymentTransactionStatus;
-import team.asd.dao.TestPaymentTransactionDao;
+import team.asd.dao.ImplPaymentTransactionDao;
 import team.asd.entity.PaymentTransaction;
 import team.asd.exception.ValidationException;
 
@@ -22,7 +22,7 @@ class PaymentTransactionServiceTest {
 
 	@BeforeAll
 	public static void setUp() {
-		paymentTransactionService = new PaymentTransactionService(new TestPaymentTransactionDao());
+		paymentTransactionService = new PaymentTransactionService(new ImplPaymentTransactionDao());
 	}
 
 	@BeforeEach

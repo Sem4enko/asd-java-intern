@@ -1,8 +1,10 @@
 package team.asd.dao;
 
+import org.springframework.stereotype.Repository;
 import team.asd.entity.PaymentTransaction;
 
-public class TestPaymentTransactionDao implements PaymentTransactionDao {
+@Repository
+public class ImplPaymentTransactionDao implements PaymentTransactionDao{
 	@Override
 	public PaymentTransaction readById(Integer id) {
 		return null;
