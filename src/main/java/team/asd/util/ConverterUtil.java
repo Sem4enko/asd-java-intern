@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import team.asd.constant.FundsHolderEnum;
 import team.asd.constant.PaymentTransactionChargeType;
 import team.asd.constant.PaymentTransactionStatus;
-import team.asd.dto.PaymentTransactionDTO;
+import team.asd.dto.PaymentTransactionDto;
 import team.asd.entity.PaymentTransaction;
 
 import java.time.LocalDate;
@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 public class ConverterUtil {
 	private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-	public static PaymentTransaction convertToEntity(PaymentTransactionDTO paymentTransactionDTO) {
+	public static PaymentTransaction convertToEntity(PaymentTransactionDto paymentTransactionDTO) {
 		if (Objects.isNull(paymentTransactionDTO)) {
 			return null;
 		}
@@ -41,11 +41,11 @@ public class ConverterUtil {
 				.build();
 	}
 
-	public static PaymentTransactionDTO convertToDto(PaymentTransaction paymentTransaction) {
+	public static PaymentTransactionDto convertToDto(PaymentTransaction paymentTransaction) {
 		if (Objects.isNull(paymentTransaction)) {
 			return null;
 		}
-		return PaymentTransactionDTO.builder()
+		return PaymentTransactionDto.builder()
 				.id(paymentTransaction.getId())
 				.paymentProvider(paymentTransaction.getPaymentProvider())
 				.createdDate(convertLocalDateToString(paymentTransaction.getCreatedDate()))
