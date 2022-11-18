@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import team.asd.dto.PaymentTransactionDTO;
+import team.asd.dto.PaymentTransactionDto;
 import team.asd.entity.PaymentTransaction;
 import team.asd.service.PaymentTransactionService;
 import team.asd.util.ConverterUtil;
@@ -32,13 +32,13 @@ public class PaymentTransactionController {
 	}
 
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> createPaymentTransaction(@RequestBody @Valid PaymentTransactionDTO paymentTransactionDTO) {
+	public ResponseEntity<Object> createPaymentTransaction(@RequestBody @Valid PaymentTransactionDto paymentTransactionDTO) {
 		PaymentTransaction paymentTransaction = paymentTransactionService.create(ConverterUtil.convertToEntity(paymentTransactionDTO));
 		return new ResponseEntity<>(ConverterUtil.convertToDto(paymentTransaction), HttpStatus.OK);
 	}
 
 	@PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> updatePaymentTransaction(@RequestBody @Valid PaymentTransactionDTO paymentTransactionDTO) {
+	public ResponseEntity<Object> updatePaymentTransaction(@RequestBody @Valid PaymentTransactionDto paymentTransactionDTO) {
 		PaymentTransaction paymentTransaction = paymentTransactionService.update(Objects.requireNonNull(ConverterUtil.convertToEntity(paymentTransactionDTO)));
 		return new ResponseEntity<>(ConverterUtil.convertToDto(paymentTransaction), HttpStatus.OK);
 	}

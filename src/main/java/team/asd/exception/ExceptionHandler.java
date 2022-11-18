@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ExceptionHandler {
 
-	@org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
-	public ResponseError handleException(Exception exception) {
-		log.error(exception.getMessage(), exception);
-		return new ResponseError(exception.getMessage(), HttpStatus.NOT_FOUND.value());
-	}
+//	@org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
+//	public ResponseError handleException(Exception exception) {
+//		log.error(exception.getMessage(), exception);
+//		return new ResponseError(exception.getMessage(), HttpStatus.NOT_FOUND.value());
+//	}
 
 	@org.springframework.web.bind.annotation.ExceptionHandler(ValidationException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)

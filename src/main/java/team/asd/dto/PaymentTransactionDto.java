@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PaymentTransactionDTO {
+public class PaymentTransactionDto {
 
 	@NotEmpty
 	@Positive
