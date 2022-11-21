@@ -1,27 +1,32 @@
 package team.asd.dao;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import team.asd.entity.PaymentTransaction;
+import team.asd.mapper.PaymentTransactionMapper;
 
 @Repository
-public class ImplPaymentTransactionDao implements PaymentTransactionDao{
+@AllArgsConstructor
+public class ImplPaymentTransactionDao implements PaymentTransactionDao {
+	private PaymentTransactionMapper paymentTransactionMapper;
+
 	@Override
 	public PaymentTransaction readById(Integer id) {
-		return null;
+		return paymentTransactionMapper.readById(id);
 	}
 
 	@Override
 	public PaymentTransaction create(PaymentTransaction paymentTransaction) {
-		return paymentTransaction;
+		return paymentTransactionMapper.create(paymentTransaction);
 	}
 
 	@Override
 	public PaymentTransaction update(PaymentTransaction paymentTransaction) {
-		return null;
+		return paymentTransactionMapper.update(paymentTransaction);
 	}
 
 	@Override
 	public void delete(Integer id) {
-
+		paymentTransactionMapper.delete(id);
 	}
 }

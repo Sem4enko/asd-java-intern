@@ -6,8 +6,16 @@ public enum FundsHolderEnum {
 	FundsHolderEnum(int value) {
 		this.value = value;
 	}
-
 	public int getValue() {
 		return value;
+	}
+
+	public static FundsHolderEnum getByInt(Integer intValue) {
+		for (FundsHolderEnum v : values()) {
+			if (intValue.equals(v.value)) {
+				return v;
+			}
+		}
+		return null;
 	}
 }
