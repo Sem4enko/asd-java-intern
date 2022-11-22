@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import team.asd.dto.PaymentTransactionDto;
 import team.asd.entity.PaymentTransaction;
 import team.asd.service.PaymentTransactionService;
-import team.asd.util.ConverterUtil;
+import team.asd.util.PaymentTransactionConverterUtil;
 
 import javax.validation.Valid;
 import java.util.Objects;
@@ -28,19 +28,19 @@ public class PaymentTransactionController {
 
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> getPaymentTransactionById(@PathVariable(value = "id") Integer id) {
-		return new ResponseEntity<>(ConverterUtil.convertToDto(paymentTransactionService.readById(id)), HttpStatus.OK);
+		return new ResponseEntity<>(PaymentTransactionConverterUtil.convertToDto(paymentTransactionService.readById(id)), HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> createPaymentTransaction(@RequestBody @Valid PaymentTransactionDto paymentTransactionDTO) {
-		PaymentTransaction paymentTransaction = paymentTransactionService.create(ConverterUtil.convertToEntity(paymentTransactionDTO));
-		return new ResponseEntity<>(ConverterUtil.convertToDto(paymentTransaction), HttpStatus.OK);
+		PaymentTransaction paymentTransaction = paymentTransactionService.create(PaymentTransactionConverterUtil.convertToEntity(paymentTransactionDTO));
+		return new ResponseEntity<>(PaymentTransactionConverterUtil.convertToDto(paymentTransaction), HttpStatus.OK);
 	}
 
 	@PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> updatePaymentTransaction(@RequestBody @Valid PaymentTransactionDto paymentTransactionDTO) {
-		PaymentTransaction paymentTransaction = paymentTransactionService.update(Objects.requireNonNull(ConverterUtil.convertToEntity(paymentTransactionDTO)));
-		return new ResponseEntity<>(ConverterUtil.convertToDto(paymentTransaction), HttpStatus.OK);
+		PaymentTransaction paymentTransaction = paymentTransactionService.update(Objects.requireNonNull(PaymentTransactionConverterUtil.convertToEntity(paymentTransactionDTO)));
+		return new ResponseEntity<>(PaymentTransactionConverterUtil.convertToDto(paymentTransaction), HttpStatus.OK);
 	}
 
 	@DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
