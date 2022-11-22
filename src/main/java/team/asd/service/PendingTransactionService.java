@@ -1,14 +1,13 @@
 package team.asd.service;
 
-import org.springframework.stereotype.Service;
+import org.apache.commons.lang3.ObjectUtils;
 import team.asd.dao.PendingTransactionDao;
 import team.asd.entity.PendingTransaction;
 import team.asd.exception.ValidationException;
-import org.apache.commons.lang3.ObjectUtils;
 
 import java.util.Objects;
 
-@Service
+
 public class PendingTransactionService {
 
 	PendingTransactionDao pendingTransactionDao;
