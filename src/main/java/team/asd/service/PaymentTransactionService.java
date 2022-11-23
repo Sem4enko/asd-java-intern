@@ -21,6 +21,7 @@ public class PaymentTransactionService {
 
 	public PaymentTransaction create(PaymentTransaction paymentTransaction) throws ValidationException {
 		checkPaymentTransaction(paymentTransaction);
+		checkId(paymentTransaction.getId());
 		return paymentTransactionDao.create(paymentTransaction);
 	}
 
@@ -45,6 +46,5 @@ public class PaymentTransactionService {
 				paymentTransaction.getReservationId(), paymentTransaction.getFundsHolder(), paymentTransaction.getStatus(), paymentTransaction.getCurrency())) {
 			throw new ValidationException("Wrong field was provided");
 		}
-		//checkId(paymentTransaction.getId());
 	}
 }
