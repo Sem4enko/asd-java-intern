@@ -1,7 +1,8 @@
-package team.asd.constant;
+package team.asd.handler;
 
-import org.apache.ibatis.type.EnumOrdinalTypeHandler;
+import org.apache.ibatis.type.EnumTypeHandler;
 import org.apache.ibatis.type.JdbcType;
+import team.asd.constant.FundsHolderEnum;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -9,10 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class FundsHolderEnumHandler extends EnumOrdinalTypeHandler<FundsHolderEnum> {
+public class FundsHolderEnumHandler extends EnumTypeHandler<FundsHolderEnum> {
 
-	public FundsHolderEnumHandler(Class<FundsHolderEnum> type) {
-		super(type);
+	public FundsHolderEnumHandler() {
+		super(FundsHolderEnum.class);
 	}
 
 		@Override

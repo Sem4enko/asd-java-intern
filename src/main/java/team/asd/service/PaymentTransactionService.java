@@ -45,6 +45,6 @@ public class PaymentTransactionService {
 				paymentTransaction.getReservationId(), paymentTransaction.getFundsHolder(), paymentTransaction.getStatus(), paymentTransaction.getCurrency())) {
 			throw new ValidationException("Wrong field was provided");
 		}
-		checkId(paymentTransaction.getId());
+		//checkId(paymentTransaction.getId());
 	}
 }

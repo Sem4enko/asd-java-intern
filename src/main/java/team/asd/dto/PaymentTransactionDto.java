@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
@@ -16,12 +17,11 @@ import javax.validation.constraints.Size;
 @Builder
 public class PaymentTransactionDto {
 
-	@NotEmpty
 	@Positive
 	@JsonProperty("id")
 	private Integer id;
 
-	@NotEmpty
+	@NotNull
 	@Positive
 	@JsonProperty("payment_provider")
 	private Integer paymentProvider;
@@ -30,12 +30,12 @@ public class PaymentTransactionDto {
 	@JsonProperty("created_date")
 	private String createdDate;
 
-	@NotEmpty
+	@NotNull
 	@Positive
 	@JsonProperty("reservation_id")
 	private Integer reservationId;
 
-	@NotEmpty
+	@NotNull
 	@JsonProperty("funds_holder")
 	private Integer fundsHolder;
 

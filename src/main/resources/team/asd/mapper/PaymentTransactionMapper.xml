@@ -8,7 +8,7 @@
 		<result property='paymentProvider' column='payment_provider'/>
 		<result property='createdDate' column='created_date'/>
 		<result property='reservationId' column='reservation_id'/>
-		<result property='fundsHolder' column='funds_holder'  jdbcType="VARCHAR" javaType="team.asd.constant.FundsHolderEnum" typeHandler="team.asd.constant.FundsHolderEnumHandler"/>
+		<result property='fundsHolder' column='funds_holder' typeHandler="team.asd.handler.FundsHolderEnumHandler"/>
 		<result property='partialIin' column='partial_iin'/>
 		<result property='status' column='status'/>
 		<result property='message' column='message'/>
@@ -61,11 +61,8 @@
 		WHERE id = #{id}
 	</update>
 
-	<update id="delete" parameterType="int">
-		UPDATE payment_transaction
-		SET state = 'Final'
-		WHERE id = #{id}
-	</update>
-
+	<delete id="delete" parameterType="int">
+		DELETE FROM ppayment_transaction WHERE id = #{id}
+	</delete>
 
 </mapper>
