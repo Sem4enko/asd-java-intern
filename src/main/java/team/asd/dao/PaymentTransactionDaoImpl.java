@@ -7,7 +7,7 @@ import team.asd.mapper.PaymentTransactionMapper;
 
 @Repository
 @AllArgsConstructor
-public class ImplPaymentTransactionDao implements PaymentTransactionDao {
+public class PaymentTransactionDaoImpl implements PaymentTransactionDao {
 	private PaymentTransactionMapper paymentTransactionMapper;
 
 	@Override
@@ -16,13 +16,13 @@ public class ImplPaymentTransactionDao implements PaymentTransactionDao {
 	}
 
 	@Override
-	public PaymentTransaction create(PaymentTransaction paymentTransaction) {
-		return paymentTransactionMapper.create(paymentTransaction);
+	public void create(PaymentTransaction paymentTransaction) {
+		 paymentTransactionMapper.create(paymentTransaction);
 	}
 
 	@Override
-	public PaymentTransaction update(PaymentTransaction paymentTransaction) {
-		return paymentTransactionMapper.update(paymentTransaction);
+	public void update(PaymentTransaction paymentTransaction) {
+		 paymentTransactionMapper.update(paymentTransaction);
 	}
 
 	@Override

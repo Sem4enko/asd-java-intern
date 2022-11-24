@@ -1,5 +1,7 @@
 package team.asd.constant;
 
+import java.util.stream.Stream;
+
 public enum FundsHolderEnum {
 	PropertyManager(0), BookingPal(1), Splitted(2), ChannelPartner(3);
 	private final int value;
@@ -11,11 +13,9 @@ public enum FundsHolderEnum {
 	}
 
 	public static FundsHolderEnum getByInt(Integer intValue) {
-		for (FundsHolderEnum v : values()) {
-			if (intValue.equals(v.value)) {
-				return v;
-			}
-		}
-		return null;
+		return Stream.of(FundsHolderEnum.values())
+				.filter(e -> intValue.equals(e.getValue()))
+				.findAny()
+				.orElse(null);
 	}
 }

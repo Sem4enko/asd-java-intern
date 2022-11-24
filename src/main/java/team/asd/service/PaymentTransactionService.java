@@ -19,14 +19,14 @@ public class PaymentTransactionService {
 		return paymentTransactionDao.readById(id);
 	}
 
-	public PaymentTransaction create(PaymentTransaction paymentTransaction) throws ValidationException {
+	public void create(PaymentTransaction paymentTransaction) throws ValidationException {
 		checkPaymentTransaction(paymentTransaction);
-		return paymentTransactionDao.create(paymentTransaction);
+		paymentTransactionDao.create(paymentTransaction);
 	}
 
-	public PaymentTransaction update(PaymentTransaction paymentTransaction) throws ValidationException {
+	public void update(PaymentTransaction paymentTransaction) throws ValidationException {
 		checkId(paymentTransaction.getId());
-		return paymentTransactionDao.update(paymentTransaction);
+		paymentTransactionDao.update(paymentTransaction);
 	}
 
 	public void delete(Integer id) throws ValidationException {
@@ -45,6 +45,5 @@ public class PaymentTransactionService {
 				paymentTransaction.getReservationId(), paymentTransaction.getFundsHolder(), paymentTransaction.getStatus(), paymentTransaction.getCurrency())) {
 			throw new ValidationException("Wrong field was provided");
 		}
-		checkId(paymentTransaction.getId());
 	}
 }
