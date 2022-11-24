@@ -64,12 +64,6 @@ class PaymentTransactionServiceTest {
 		assertThrows(ValidationException.class, () -> paymentTransactionService.create(null), "Validation exception should be thrown");
 	}
 
-//	@Test
-//	void testCreateWithNullId() {
-//		paymentTransaction.setId(null);
-//		assertThrows(ValidationException.class, () -> paymentTransactionService.create(paymentTransaction), "Validation exception should be thrown");
-//	}
-
 	@Test
 	void testCreateWithNullReservationIdAndNullStatus() {
 		paymentTransaction.setReservationId(null);
@@ -82,11 +76,10 @@ class PaymentTransactionServiceTest {
 		assertDoesNotThrow(() -> paymentTransactionService.update(paymentTransaction), "Validation should be passed");
 	}
 
-//	@Test
-//	void testCheckPaymentTransactionNull() {
-//		paymentTransaction.setId(null);
-//		assertThrows(ValidationException.class, () -> paymentTransactionService.create(paymentTransaction), "Validation exception should be thrown");
-//	}
+	@Test
+	void testCheckPaymentTransactionNull() {
+		assertThrows(ValidationException.class, () -> paymentTransactionService.create(null), "Validation exception should be thrown");
+	}
 
 	@Test
 	void testDelete() {

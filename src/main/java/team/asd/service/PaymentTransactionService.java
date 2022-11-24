@@ -21,13 +21,12 @@ public class PaymentTransactionService {
 
 	public void create(PaymentTransaction paymentTransaction) throws ValidationException {
 		checkPaymentTransaction(paymentTransaction);
-		//checkId(paymentTransaction.getId());
-		 paymentTransactionDao.create(paymentTransaction);
+		paymentTransactionDao.create(paymentTransaction);
 	}
 
-	public PaymentTransaction update(PaymentTransaction paymentTransaction) throws ValidationException {
+	public void update(PaymentTransaction paymentTransaction) throws ValidationException {
 		checkId(paymentTransaction.getId());
-		return paymentTransactionDao.update(paymentTransaction);
+		paymentTransactionDao.update(paymentTransaction);
 	}
 
 	public void delete(Integer id) throws ValidationException {

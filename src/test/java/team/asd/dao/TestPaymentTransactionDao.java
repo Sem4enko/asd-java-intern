@@ -13,8 +13,8 @@ public class TestPaymentTransactionDao implements PaymentTransactionDao{
 	}
 
 	@Override
-	public PaymentTransaction update(PaymentTransaction paymentTransaction) {
-		return null;
+	public void update(PaymentTransaction paymentTransaction) {
+
 	}
 
 	@Override

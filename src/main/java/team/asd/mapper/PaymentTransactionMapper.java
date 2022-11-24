@@ -7,6 +7,6 @@ import team.asd.entity.PaymentTransaction;
 public interface PaymentTransactionMapper {
 	PaymentTransaction readById(Integer id);
 	void create(PaymentTransaction paymentTransaction);
-	PaymentTransaction update(PaymentTransaction paymentTransaction);
+	void update(PaymentTransaction paymentTransaction);
 	void delete(Integer id);
 }
