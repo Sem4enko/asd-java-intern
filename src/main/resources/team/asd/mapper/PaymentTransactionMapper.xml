@@ -62,7 +62,7 @@
 	</update>
 
 	<delete id="delete" parameterType="int">
-		DELETE FROM ppayment_transaction WHERE id = #{id}
+		DELETE FROM payment_transaction WHERE id = #{id}
 	</delete>
 
 </mapper>

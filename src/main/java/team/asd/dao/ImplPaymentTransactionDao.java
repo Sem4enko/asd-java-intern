@@ -16,8 +16,8 @@ public class ImplPaymentTransactionDao implements PaymentTransactionDao {
 	}
 
 	@Override
-	public PaymentTransaction create(PaymentTransaction paymentTransaction) {
-		return paymentTransactionMapper.create(paymentTransaction);
+	public void create(PaymentTransaction paymentTransaction) {
+		 paymentTransactionMapper.create(paymentTransaction);
 	}
 
 	@Override

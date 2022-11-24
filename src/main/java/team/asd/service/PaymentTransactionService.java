@@ -19,10 +19,10 @@ public class PaymentTransactionService {
 		return paymentTransactionDao.readById(id);
 	}
 
-	public PaymentTransaction create(PaymentTransaction paymentTransaction) throws ValidationException {
+	public void create(PaymentTransaction paymentTransaction) throws ValidationException {
 		checkPaymentTransaction(paymentTransaction);
-		checkId(paymentTransaction.getId());
-		return paymentTransactionDao.create(paymentTransaction);
+		//checkId(paymentTransaction.getId());
+		 paymentTransactionDao.create(paymentTransaction);
 	}
 
 	public PaymentTransaction update(PaymentTransaction paymentTransaction) throws ValidationException {

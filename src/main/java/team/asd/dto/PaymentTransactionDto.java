@@ -17,6 +17,7 @@ import javax.validation.constraints.Size;
 @Builder
 public class PaymentTransactionDto {
 
+	//@NotNull
 	@Positive
 	@JsonProperty("id")
 	private Integer id;

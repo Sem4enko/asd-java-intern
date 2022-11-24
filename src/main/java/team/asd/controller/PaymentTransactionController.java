@@ -33,7 +33,8 @@ public class PaymentTransactionController {
 
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> createPaymentTransaction(@RequestBody @Valid PaymentTransactionDto paymentTransactionDTO) {
-		PaymentTransaction paymentTransaction = paymentTransactionService.create(ConverterUtil.convertToEntity(paymentTransactionDTO));
+		PaymentTransaction paymentTransaction = ConverterUtil.convertToEntity(paymentTransactionDTO);
+		paymentTransactionService.create(ConverterUtil.convertToEntity(paymentTransactionDTO));
 		return new ResponseEntity<>(ConverterUtil.convertToDto(paymentTransaction), HttpStatus.OK);
 	}
 

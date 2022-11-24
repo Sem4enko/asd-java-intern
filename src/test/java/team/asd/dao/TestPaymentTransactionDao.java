@@ -9,8 +9,7 @@ public class TestPaymentTransactionDao implements PaymentTransactionDao{
 	}
 
 	@Override
-	public PaymentTransaction create(PaymentTransaction paymentTransaction) {
-		return paymentTransaction;
+	public void create(PaymentTransaction paymentTransaction) {
 	}
 
 	@Override
