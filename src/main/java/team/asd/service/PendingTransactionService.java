@@ -22,14 +22,14 @@ public class PendingTransactionService {
 		return pendingTransactionDao.readById(id);
 	}
 
-	public PendingTransaction create(PendingTransaction pendingTransaction) throws ValidationException {
+	public void create(PendingTransaction pendingTransaction) throws ValidationException {
 		checkPaymentTransaction(pendingTransaction);
-		return pendingTransactionDao.create(pendingTransaction);
+		pendingTransactionDao.create(pendingTransaction);
 	}
 
-	public PendingTransaction update(PendingTransaction pendingTransaction) throws ValidationException {
+	public void update(PendingTransaction pendingTransaction) throws ValidationException {
 		checkId(pendingTransaction.getId());
-		return pendingTransactionDao.update(pendingTransaction);
+		pendingTransactionDao.update(pendingTransaction);
 	}
 
 	public void delete(Integer id) throws ValidationException {
@@ -48,6 +48,5 @@ public class PendingTransactionService {
 				pendingTransaction.getChargeAmount(), pendingTransaction.getStatus())) {
 			throw new ValidationException("Wrong field was provided");
 		}
-		checkId(pendingTransaction.getId());
 	}
 }

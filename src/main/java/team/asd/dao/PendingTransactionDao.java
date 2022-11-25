@@ -5,9 +5,9 @@ import team.asd.entity.PendingTransaction;
 public interface PendingTransactionDao {
 	PendingTransaction readById(Integer id);
 
-	PendingTransaction create(PendingTransaction pendingTransaction);
+	void create(PendingTransaction pendingTransaction);
 
-	PendingTransaction update(PendingTransaction pendingTransaction);
+	void update(PendingTransaction pendingTransaction);
 
 	void delete(Integer id);
 }

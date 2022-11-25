@@ -107,6 +107,9 @@ public class PaymentTransactionConverterUtil {
 	}
 
 	public static FundsHolderEnum convertIntegerToFundsHolder(Integer value) {
+		if (value == null) {
+			return null;
+		}
 		return Stream.of(FundsHolderEnum.values())
 				.filter(element -> element.getValue() == value)
 				.findFirst()

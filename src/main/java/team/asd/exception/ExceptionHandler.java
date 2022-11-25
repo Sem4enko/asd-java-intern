@@ -21,4 +21,5 @@ public class ExceptionHandler {
 		log.error(exception.getMessage(), exception);
 		return new ResponseError(exception.getMessage(), HttpStatus.NOT_FOUND.value());
 	}
+
 }
