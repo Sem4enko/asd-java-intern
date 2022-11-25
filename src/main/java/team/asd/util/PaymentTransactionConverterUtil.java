@@ -13,7 +13,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-public class ConverterUtil {
+public class PaymentTransactionConverterUtil {
 	private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	public static PaymentTransaction convertToEntity(PaymentTransactionDto paymentTransactionDTO) {
