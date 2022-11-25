@@ -9,13 +9,13 @@ public class TestPendingTransactionDao implements PendingTransactionDao{
 	}
 
 	@Override
-	public PendingTransaction create(PendingTransaction pendingTransaction) {
-		return pendingTransaction;
+	public void create(PendingTransaction pendingTransaction) {
+
 	}
 
 	@Override
-	public PendingTransaction update(PendingTransaction pendingTransaction) {
-		return null;
+	public void update(PendingTransaction pendingTransaction) {
+
 	}
 
 	@Override

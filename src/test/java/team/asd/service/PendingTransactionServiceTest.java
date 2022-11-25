@@ -11,7 +11,6 @@ import team.asd.exception.ValidationException;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -54,19 +53,12 @@ class PendingTransactionServiceTest {
 
 	@Test
 	void testCreate() throws ValidationException {
-		assertEquals(pendingTransaction, pendingTransactionService.create(pendingTransaction));
 		assertDoesNotThrow(() -> pendingTransactionService.create(pendingTransaction), "Validation should be passed");
 	}
 
 	@Test
 	void testCreateWithNull() {
 		assertThrows(ValidationException.class, () -> pendingTransactionService.create(null), "Validation exception should be thrown");
-	}
-
-	@Test
-	void testCreateWithNullId() {
-		pendingTransaction.setId(null);
-		assertThrows(ValidationException.class, () -> pendingTransactionService.create(pendingTransaction), "Validation exception should be thrown");
 	}
 
 	@Test
@@ -83,8 +75,7 @@ class PendingTransactionServiceTest {
 
 	@Test
 	void testCheckPaymentTransactionNull() {
-		pendingTransaction.setId(null);
-		assertThrows(ValidationException.class, () -> pendingTransactionService.create(pendingTransaction), "Validation exception should be thrown");
+		assertThrows(ValidationException.class, () -> pendingTransactionService.create(null), "Validation exception should be thrown");
 	}
 
 	@Test
