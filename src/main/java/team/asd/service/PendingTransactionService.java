@@ -1,5 +1,6 @@
 package team.asd.service;
 
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 import team.asd.dao.PendingTransactionDao;
@@ -9,13 +10,9 @@ import team.asd.exception.ValidationException;
 import java.util.Objects;
 
 @Service
+@AllArgsConstructor
 public class PendingTransactionService {
-
 	PendingTransactionDao pendingTransactionDao;
-
-	public PendingTransactionService(PendingTransactionDao pendingTransactionDao) {
-		this.pendingTransactionDao = pendingTransactionDao;
-	}
 
 	public PendingTransaction readById(Integer id) throws ValidationException {
 		checkId(id);
