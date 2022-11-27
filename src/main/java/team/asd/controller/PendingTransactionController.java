@@ -33,14 +33,15 @@ public class PendingTransactionController {
 
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> createPendingTransaction(@RequestBody @Valid PendingTransactionDto pendingTransactionDto) {
-		PendingTransaction pendingTransaction = pendingTransactionService.create(PendingTransactionConverterUtil.convertToEntity(pendingTransactionDto));
+		PendingTransaction pendingTransaction = PendingTransactionConverterUtil.convertToEntity(pendingTransactionDto);
+		pendingTransactionService.create(pendingTransaction);
 		return new ResponseEntity<>(PendingTransactionConverterUtil.convertToDto(pendingTransaction), HttpStatus.OK);
 	}
 
 	@PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> updatePendingTransaction(@RequestBody @Valid PendingTransactionDto pendingTransactionDto) {
-		PendingTransaction pendingTransaction = pendingTransactionService.update(
-				Objects.requireNonNull(PendingTransactionConverterUtil.convertToEntity(pendingTransactionDto)));
+		PendingTransaction pendingTransaction = PendingTransactionConverterUtil.convertToEntity(pendingTransactionDto);
+		pendingTransactionService.update(Objects.requireNonNull(pendingTransaction));
 		return new ResponseEntity<>(PendingTransactionConverterUtil.convertToDto(pendingTransaction), HttpStatus.OK);
 	}
 

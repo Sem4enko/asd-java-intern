@@ -4,20 +4,20 @@ import org.springframework.stereotype.Repository;
 import team.asd.entity.PendingTransaction;
 
 @Repository
-public class ImplPendingTransactionDao implements PendingTransactionDao {
+public class PendingTransactionDaoImpl implements PendingTransactionDao {
 	@Override
 	public PendingTransaction readById(Integer id) {
 		return null;
 	}
 
 	@Override
-	public PendingTransaction create(PendingTransaction pendingTransaction) {
-		return pendingTransaction;
+	public void create(PendingTransaction pendingTransaction) {
+
 	}
 
 	@Override
-	public PendingTransaction update(PendingTransaction pendingTransaction) {
-		return null;
+	public void update(PendingTransaction pendingTransaction) {
+
 	}
 
 	@Override

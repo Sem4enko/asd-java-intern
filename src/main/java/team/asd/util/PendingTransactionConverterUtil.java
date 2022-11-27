@@ -60,6 +60,9 @@ public class PendingTransactionConverterUtil {
 	}
 
 	public static PendingTransactionStatus convertStringToStatus(String status) {
+		if (StringUtils.isBlank(status)) {
+			return null;
+		}
 		return Stream.of(PendingTransactionStatus.values())
 				.filter(element -> element.name()
 						.equals(status))
