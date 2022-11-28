@@ -25,11 +25,9 @@ public class PaymentGatewayProviderDto {
 	@JsonProperty("fee")
 	private Double fee;
 
-	@Positive
 	@JsonProperty("autopay")
 	private Integer autoPay;
 
-	@Positive
 	@JsonProperty("support_split_payment")
 	private Integer supportSplitPayment;
 

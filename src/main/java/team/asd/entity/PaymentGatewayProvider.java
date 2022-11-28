@@ -5,6 +5,8 @@ import lombok.Data;
 import team.asd.constant.PaymentProcessingTypeEnum;
 import team.asd.constant.SupportSplitPaymentEnum;
 
+import java.util.Date;
+
 @Data
 @Builder
 public class PaymentGatewayProvider {
@@ -13,6 +15,6 @@ public class PaymentGatewayProvider {
 	private Double fee;
 	private PaymentProcessingTypeEnum autoPay;
 	private SupportSplitPaymentEnum supportSplitPayment;
-	private Integer version;
+	private Date version;
 
 }

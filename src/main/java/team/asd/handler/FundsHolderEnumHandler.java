@@ -9,14 +9,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
 public class FundsHolderEnumHandler extends EnumTypeHandler<FundsHolderEnum> {
 
 	public FundsHolderEnumHandler() {
 		super(FundsHolderEnum.class);
 	}
 
-		@Override
+	@Override
 	public void setNonNullParameter(PreparedStatement ps, int i, FundsHolderEnum parameter, JdbcType jdbcType) throws SQLException {
 		ps.setInt(i, parameter.getValue());
 	}
