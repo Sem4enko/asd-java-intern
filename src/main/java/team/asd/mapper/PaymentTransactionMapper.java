@@ -1,8 +1,10 @@
-package team.asd.dao;
+package team.asd.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
 import team.asd.entity.PaymentTransaction;
 
-public interface PaymentTransactionDao {
+@Mapper
+public interface PaymentTransactionMapper {
 	PaymentTransaction readById(Integer id);
 	void create(PaymentTransaction paymentTransaction);
 	void update(PaymentTransaction paymentTransaction);
