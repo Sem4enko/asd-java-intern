@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="team.asd.mapper.PendingTransactionMapper">
+
+	<resultMap type='team.asd.entity.PendingTransaction' id='PendingTransactionResultMap'>
+		<id property='id' column='id'/>
+		<result property='reservationId' column='reservation_id'/>
+		<result property='partialIin' column='partial_iin'/>
+		<result property='chargeDate' column='charge_date'/>
+		<result property='chargeAmount' column='charge_amount'/>
+		<result property='status' column='status' typeHandler="team.asd.handler.PendingTransactionStatusHandler" />
+		<result property='version' column='version'/>
+	</resultMap>
+
+	<select id="readById" parameterType="int" resultMap="PendingTransactionResultMap">
+		SELECT id,reservation_id,partial_iin,charge_date,charge_amount,status,version
+		FROM pending_transaction
+		WHERE id = #{id}
+	</select>
+
+	<insert id="create" parameterType="team.asd.entity.PendingTransaction" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO pending_transaction(reservation_id,partial_iin,charge_date,charge_amount,status)
+		VALUES (#{reservationId}, #{partialIin}, #{chargeDate}, #{chargeAmount}, #{status})
+	</insert>
+
+	<update id="update" parameterType="team.asd.entity.PendingTransaction">
+		UPDATE pending_transaction
+		<set>
+			<if test="reservationId != null">reservation_id = #{reservationId},</if>
+			<if test="partialIin != null">partial_iin = #{partialIin},</if>
+			<if test="chargeDate != null">charge_date = #{chargeDate},</if>
+			<if test="chargeAmount != null">charge_amount = #{chargeAmount},</if>
+			<if test="status != null">status = #{status},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM pending_transaction WHERE id = #{id}
+	</delete>
+
+</mapper>
