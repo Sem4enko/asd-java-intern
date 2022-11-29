@@ -55,7 +55,6 @@ class PaymentTransactionServiceTest {
 
 	@Test
 	void testCreate() throws ValidationException {
-
 		assertDoesNotThrow(() -> paymentTransactionService.create(paymentTransaction), "Validation should be passed");
 	}
 
