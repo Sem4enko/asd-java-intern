@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="team.asd.mapper.PaymentGatewayProviderMapper">
+
+	<resultMap type='team.asd.entity.PaymentGatewayProvider' id='PaymentGatewayProviderResultMap'>
+		<id property='id' column='id'/>
+		<result property='name' column='name'/>
+		<result property='fee' column='fee'/>
+		<result property='autoPay' column='autopay' typeHandler="team.asd.handler.PaymentProcessingTypeEnumHandler"/>
+		<result property='supportSplitPayment' column='support_split_payment' typeHandler="team.asd.handler.SupportSplitPaymentEnumHandler"/>
+		<result property='version' column='version'/>
+	</resultMap>
+
+	<select id="readById" parameterType="int" resultMap="PaymentGatewayProviderResultMap">
+		SELECT id,name,fee,autopay,support_split_payment,version
+		FROM payment_gateway_provider
+		WHERE id = #{id}
+	</select>
+
+	<insert id="create" parameterType="team.asd.entity.PaymentGatewayProvider" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO payment_gateway_provider(name,fee,autopay,support_split_payment)
+		VALUES (#{name}, #{fee}, #{autoPay}, #{supportSplitPayment})
+	</insert>
+
+	<update id="update" parameterType="team.asd.entity.PaymentGatewayProvider">
+		UPDATE payment_gateway_provider
+		<set>
+			<if test="name != null">name = #{name},</if>
+			<if test="fee != null">fee = #{fee},</if>
+			<if test="autoPay != null">autopay = #{autoPay},</if>
+			<if test="supportSplitPayment != null">support_split_payment = #{supportSplitPayment},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM payment_gateway_provider WHERE id = #{id}
+	</delete>
+
+</mapper>

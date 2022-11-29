@@ -41,7 +41,7 @@ public class PaymentTransactionService {
 	}
 
 	private void checkPaymentTransaction(PaymentTransaction paymentTransaction) throws ValidationException {
-		if (Objects.isNull(paymentTransaction) || ObjectUtils.anyNull(paymentTransaction.getPaymentProvider(), paymentTransaction.getCreatedDate(),
+		if (Objects.isNull(paymentTransaction) || ObjectUtils.anyNull(paymentTransaction.getPaymentProvider(),
 				paymentTransaction.getReservationId(), paymentTransaction.getFundsHolder(), paymentTransaction.getStatus(), paymentTransaction.getCurrency())) {
 			throw new ValidationException("Wrong field was provided");
 		}

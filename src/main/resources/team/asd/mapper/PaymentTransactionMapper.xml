@@ -32,9 +32,9 @@
 	</select>
 
 	<insert id="create" parameterType="team.asd.entity.PaymentTransaction" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO payment_transaction(payment_provider,created_date,reservation_id,funds_holder,partial_iin,status,message,partner_id,supplier_id,currency,
+		INSERT INTO payment_transaction(payment_provider,reservation_id,funds_holder,partial_iin,status,message,partner_id,supplier_id,currency,
 						  total_commission,partner_payment,bp_payment,credit_card_fee,final_amount,charge_type)
-		VALUES (#{paymentProvider}, #{createdDate}, #{reservationId}, #{fundsHolder}, #{partialIin}, #{status}, #{message}, #{partnerId}, #{supplierId}, #{currency},
+		VALUES (#{paymentProvider}, #{reservationId}, #{fundsHolder}, #{partialIin}, #{status}, #{message}, #{partnerId}, #{supplierId}, #{currency},
 		        #{totalCommission}, #{partnerPayment}, #{bpPayment}, #{creditCardFee}, #{finalAmount}, #{chargeType})
 	</insert>
 
