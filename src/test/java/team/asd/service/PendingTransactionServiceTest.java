@@ -1,31 +1,44 @@
 package team.asd.service;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import team.asd.constant.PendingTransactionStatus;
-import team.asd.dao.TestPendingTransactionDao;
+import team.asd.dao.PendingTransactionDao;
 import team.asd.entity.PendingTransaction;
 import team.asd.exception.ValidationException;
 
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.verify;
 
+@RunWith(MockitoJUnitRunner.class)
 class PendingTransactionServiceTest {
 
+	@Mock
+	private PendingTransactionDao pendingTransactionDao;
 	private PendingTransaction pendingTransaction;
 	private static PendingTransactionService pendingTransactionService;
-
-	@BeforeAll
-	public static void setUp() {
-		pendingTransactionService = new PendingTransactionService(new TestPendingTransactionDao());
-	}
+	private static PendingTransaction mockPendingTransaction;
 
 	@BeforeEach
-	public void initPaymentTransaction() {
+	public void setUp() {
+		MockitoAnnotations.openMocks(this);
+		pendingTransactionService = new PendingTransactionService(pendingTransactionDao);
+		mockPendingTransaction = null;
 		pendingTransaction = PendingTransaction.builder()
 				.id(1)
 				.reservationId(1)
@@ -37,7 +50,17 @@ class PendingTransactionServiceTest {
 
 	@Test
 	void testReadById() throws ValidationException {
-		assertNull(pendingTransactionService.readById(1), "Null value should be returned");
+		Mockito.when(pendingTransactionDao.readById(1))
+				.thenReturn(pendingTransaction);
+
+		PendingTransaction pendingTransaction1 = pendingTransactionService.readById(1);
+
+		assertNotNull(pendingTransaction1, "PendingTransaction cannot be null");
+		assertEquals(1, pendingTransaction1.getId(), "Ids are not equals");
+		assertNotEquals(5, pendingTransaction1.getId(), "Ids are equals");
+		assertNull(pendingTransactionService.readById(10), "Null should be returned");
+		Mockito.verify(pendingTransactionDao, atLeast(2))
+				.readById(any(Integer.class));
 	}
 
 	@Test
@@ -53,7 +76,24 @@ class PendingTransactionServiceTest {
 
 	@Test
 	void testCreate() throws ValidationException {
-		assertDoesNotThrow(() -> pendingTransactionService.create(pendingTransaction), "Validation should be passed");
+		Mockito.doAnswer(invocation -> {
+					mockPendingTransaction = pendingTransaction;
+					return null;
+				})
+				.when(pendingTransactionDao)
+				.create(Mockito.any(PendingTransaction.class));
+
+		assertNull(mockPendingTransaction, "Null should be returned");
+		assertThrows(ValidationException.class, () -> pendingTransactionService.create(mockPendingTransaction), "Validation exception should be thrown");
+
+		pendingTransactionService.create(pendingTransaction);
+
+		assertNotNull(mockPendingTransaction, "PendingTransaction cannot be null");
+		assertEquals(1, mockPendingTransaction.getId(), "Ids are not equals");
+		assertEquals(2, mockPendingTransaction.getStatus()
+				.getValue(), "Status values are not equals");
+		Mockito.verify(pendingTransactionDao, atLeast(1))
+				.create(any(PendingTransaction.class));
 	}
 
 	@Test
@@ -70,21 +110,50 @@ class PendingTransactionServiceTest {
 
 	@Test
 	void testUpdate() {
-		assertDoesNotThrow(() -> pendingTransactionService.update(pendingTransaction), "Validation should be passed");
+		mockPendingTransaction = PendingTransaction.builder()
+				.id(1)
+				.reservationId(2)
+				.status(PendingTransactionStatus.Active)
+				.build();
+
+		Mockito.doAnswer(invocation -> {
+					mockPendingTransaction = pendingTransaction;
+					return null;
+				})
+				.when(pendingTransactionDao)
+				.update(Mockito.any(PendingTransaction.class));
+
+		assertNotEquals(pendingTransaction.getStatus(), mockPendingTransaction.getStatus());
+		assertNotEquals(pendingTransaction.getReservationId(), mockPendingTransaction.getReservationId());
+
+		pendingTransaction.setReservationId(3);
+		pendingTransaction.setStatus(PendingTransactionStatus.Failed);
+
+		pendingTransactionService.update(pendingTransaction);
+
+		assertEquals(pendingTransaction.getReservationId(), mockPendingTransaction.getReservationId());
+		assertEquals(pendingTransaction.getStatus(), mockPendingTransaction.getStatus());
+
+		Mockito.verify(pendingTransactionDao)
+				.update(Mockito.any());
 	}
 
 	@Test
-	void testCheckPaymentTransactionNull() {
+	void testCheckPendingTransactionNull() {
 		assertThrows(ValidationException.class, () -> pendingTransactionService.create(null), "Validation exception should be thrown");
 	}
 
 	@Test
 	void testDelete() {
-		assertDoesNotThrow(() -> pendingTransactionService.delete(2), "Validation should be passed");
+		assertDoesNotThrow(() -> pendingTransactionService.delete(1), "Validation should be passed");
+
+		pendingTransactionService.delete(1);
+		verify(pendingTransactionDao, atLeast(1)).delete(Mockito.anyInt());
 	}
 
 	@Test
-	void testDeleteWithNull() {
+	void testDeleteWithNullAndWrongId() {
 		assertThrows(ValidationException.class, () -> pendingTransactionService.delete(null), "Validation exception should be thrown");
+		assertThrows(ValidationException.class, () -> pendingTransactionService.delete(0), "Validation exception should be thrown");
 	}
 }
