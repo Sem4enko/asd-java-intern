@@ -1,7 +1,9 @@
 package team.asd.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import team.asd.constant.FundsHolderEnum;
 import team.asd.constant.PaymentTransactionChargeType;
 import team.asd.constant.PaymentTransactionStatus;
@@ -10,6 +12,8 @@ import java.time.LocalDate;
 import java.util.Date;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class PaymentTransaction {
 	private Integer id;

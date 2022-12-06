@@ -1,31 +1,44 @@
 package team.asd.service;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import team.asd.constant.FundsHolderEnum;
 import team.asd.constant.PaymentTransactionStatus;
-import team.asd.dao.TestPaymentTransactionDao;
+import team.asd.dao.PaymentTransactionDao;
 import team.asd.entity.PaymentTransaction;
 import team.asd.exception.ValidationException;
 
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.verify;
 
+@RunWith(MockitoJUnitRunner.class)
 class PaymentTransactionServiceTest {
+
+	@Mock
+	private PaymentTransactionDao paymentTransactionDao;
 	private PaymentTransaction paymentTransaction;
 	private static PaymentTransactionService paymentTransactionService;
-
-	@BeforeAll
-	public static void setUp() {
-		paymentTransactionService = new PaymentTransactionService(new TestPaymentTransactionDao());
-	}
+	private static PaymentTransaction mockPaymentTransaction;
 
 	@BeforeEach
-	public void initPaymentTransaction() {
+	public void setUp() {
+		MockitoAnnotations.openMocks(this);
+		paymentTransactionService = new PaymentTransactionService(paymentTransactionDao);
+		mockPaymentTransaction = null;
 		paymentTransaction = PaymentTransaction.builder()
 				.id(1)
 				.paymentProvider(2)
@@ -39,7 +52,17 @@ class PaymentTransactionServiceTest {
 
 	@Test
 	void testReadById() throws ValidationException {
-		assertNull(paymentTransactionService.readById(1), "Null value should be returned");
+		Mockito.when(paymentTransactionDao.readById(1))
+				.thenReturn(paymentTransaction);
+
+		PaymentTransaction paymentTransaction1 = paymentTransactionService.readById(1);
+
+		assertNotNull(paymentTransaction1, "PaymentTransaction cannot be null");
+		assertEquals(1, paymentTransaction1.getId(), "Ids are not equals");
+		assertNotEquals(5, paymentTransaction1.getId(), "Ids are equals");
+		assertNull(paymentTransactionService.readById(10), "Null should be returned");
+		Mockito.verify(paymentTransactionDao, atLeast(2))
+				.readById(Mockito.anyInt());
 	}
 
 	@Test
@@ -55,7 +78,24 @@ class PaymentTransactionServiceTest {
 
 	@Test
 	void testCreate() throws ValidationException {
-		assertDoesNotThrow(() -> paymentTransactionService.create(paymentTransaction), "Validation should be passed");
+		Mockito.doAnswer(invocation -> {
+					mockPaymentTransaction = paymentTransaction;
+					return null;
+				})
+				.when(paymentTransactionDao)
+				.create(Mockito.any(PaymentTransaction.class));
+
+		assertNull(mockPaymentTransaction, "Null should be returned");
+		assertThrows(ValidationException.class, () -> paymentTransactionService.create(mockPaymentTransaction), "Validation exception should be thrown");
+
+		paymentTransactionService.create(paymentTransaction);
+
+		assertNotNull(mockPaymentTransaction, "PaymentTransaction cannot be null");
+		assertEquals(1, mockPaymentTransaction.getId(), "Ids are not equals");
+		assertEquals(0, mockPaymentTransaction.getFundsHolder()
+				.getValue(), "FundsHolder values are not equals");
+		Mockito.verify(paymentTransactionDao, atLeast(1))
+				.create(any(PaymentTransaction.class));
 	}
 
 	@Test
@@ -72,7 +112,31 @@ class PaymentTransactionServiceTest {
 
 	@Test
 	void testUpdate() {
-		assertDoesNotThrow(() -> paymentTransactionService.update(paymentTransaction), "Validation should be passed");
+		mockPaymentTransaction = PaymentTransaction.builder()
+				.id(1)
+				.paymentProvider(1)
+				.status(PaymentTransactionStatus.Failed)
+				.build();
+		Mockito.doAnswer(invocation -> {
+					mockPaymentTransaction = paymentTransaction;
+					return null;
+				})
+				.when(paymentTransactionDao)
+				.update(Mockito.any(PaymentTransaction.class));
+
+		assertNotEquals(paymentTransaction.getStatus(), mockPaymentTransaction.getStatus());
+		assertNotEquals(paymentTransaction.getPaymentProvider(), mockPaymentTransaction.getPaymentProvider());
+
+		paymentTransaction.setPaymentProvider(3);
+		paymentTransaction.setStatus(PaymentTransactionStatus.Failed);
+
+		paymentTransactionService.update(paymentTransaction);
+
+		assertEquals(paymentTransaction.getPaymentProvider(), mockPaymentTransaction.getPaymentProvider());
+		assertEquals(paymentTransaction.getStatus(), mockPaymentTransaction.getStatus());
+
+		Mockito.verify(paymentTransactionDao)
+				.update(Mockito.any());
 	}
 
 	@Test
@@ -83,6 +147,9 @@ class PaymentTransactionServiceTest {
 	@Test
 	void testDelete() {
 		assertDoesNotThrow(() -> paymentTransactionService.delete(2), "Validation should be passed");
+
+		paymentTransactionService.delete(1);
+		verify(paymentTransactionDao, atLeast(1)).delete(Mockito.anyInt());
 	}
 
 	@Test
