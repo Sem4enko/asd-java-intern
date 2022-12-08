@@ -13,13 +13,13 @@
 	</resultMap>
 
 	<select id="readById" parameterType="int" resultMap="PaymentGatewayProviderResultMap">
-		SELECT id,name,fee,autopay,support_split_payment,version
+		SELECT id, name, fee, autopay, support_split_payment, version
 		FROM payment_gateway_provider
 		WHERE id = #{id}
 	</select>
 
 	<insert id="create" parameterType="team.asd.entity.PaymentGatewayProvider" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO payment_gateway_provider(name,fee,autopay,support_split_payment)
+		INSERT INTO payment_gateway_provider(name, fee, autopay, support_split_payment)
 		VALUES (#{name}, #{fee}, #{autoPay}, #{supportSplitPayment})
 	</insert>
 
@@ -35,7 +35,17 @@
 	</update>
 
 	<delete id="delete" parameterType="int">
-		DELETE FROM payment_gateway_provider WHERE id = #{id}
+		DELETE
+		FROM payment_gateway_provider
+		WHERE id = #{id}
 	</delete>
+
+	<select id="readByNameAutoPaySupportSplitPayment" resultMap="PaymentGatewayProviderResultMap">
+		SELECT id, name, fee, autopay, support_split_payment, version
+		FROM payment_gateway_provider
+		WHERE support_split_payment = #{supportSplitPayment}
+		  AND autopay = #{autoPay}
+		  AND name = #{name}
+	</select>
 
 </mapper>

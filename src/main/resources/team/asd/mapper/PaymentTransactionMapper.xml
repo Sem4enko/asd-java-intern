@@ -25,17 +25,33 @@
 	</resultMap>
 
 	<select id="readById" parameterType="int" resultMap="PaymentTransactionResultMap">
-		SELECT id,payment_provider,created_date,reservation_id,funds_holder,partial_iin,status,message,partner_id,supplier_id ,currency,
-		       total_commission,partner_payment,bp_payment,credit_card_fee,final_amount,charge_type,version
+		SELECT id,
+			   payment_provider,
+			   created_date,
+			   reservation_id,
+			   funds_holder,
+			   partial_iin,
+			   status,
+			   message,
+			   partner_id,
+			   supplier_id,
+			   currency,
+			   total_commission,
+			   partner_payment,
+			   bp_payment,
+			   credit_card_fee,
+			   final_amount,
+			   charge_type,
+			   version
 		FROM payment_transaction
 		WHERE id = #{id}
 	</select>
 
 	<insert id="create" parameterType="team.asd.entity.PaymentTransaction" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO payment_transaction(payment_provider,reservation_id,funds_holder,partial_iin,status,message,partner_id,supplier_id,currency,
-						  total_commission,partner_payment,bp_payment,credit_card_fee,final_amount,charge_type)
+		INSERT INTO payment_transaction(payment_provider, reservation_id, funds_holder, partial_iin, status, message, partner_id, supplier_id, currency,
+										total_commission, partner_payment, bp_payment, credit_card_fee, final_amount, charge_type)
 		VALUES (#{paymentProvider}, #{reservationId}, #{fundsHolder}, #{partialIin}, #{status}, #{message}, #{partnerId}, #{supplierId}, #{currency},
-		        #{totalCommission}, #{partnerPayment}, #{bpPayment}, #{creditCardFee}, #{finalAmount}, #{chargeType})
+				#{totalCommission}, #{partnerPayment}, #{bpPayment}, #{creditCardFee}, #{finalAmount}, #{chargeType})
 	</insert>
 
 	<update id="update" parameterType="team.asd.entity.PaymentTransaction">
@@ -62,7 +78,80 @@
 	</update>
 
 	<delete id="delete" parameterType="int">
-		DELETE FROM payment_transaction WHERE id = #{id}
+		DELETE
+		FROM payment_transaction
+		WHERE id = #{id}
 	</delete>
+
+	<insert id="createList" parameterType="java.util.List">
+		INSERT INTO payment_transaction(payment_provider,reservation_id,funds_holder,partial_iin,status,message,partner_id,supplier_id,currency,
+		total_commission,partner_payment,bp_payment,credit_card_fee,final_amount,charge_type)
+		VALUES
+		<foreach collection="list" item="element" index="index" open="(" separator="),(" close=")">
+			#{element.paymentProvider},
+			#{element.reservationId},
+			#{element.fundsHolder},
+			#{element.partialIin},
+			#{element.status},
+			#{element.message},
+			#{element.partnerId},
+			#{element.supplierId},
+			#{element.currency},
+			#{element.totalCommission},
+			#{element.partnerPayment},
+			#{element.bpPayment},
+			#{element.creditCardFee},
+			#{element.finalAmount},
+			#{element.chargeType}
+		</foreach>
+	</insert>
+
+	<select id="readByReservationIdStatus"  resultMap="PaymentTransactionResultMap">
+		SELECT id,
+			   payment_provider,
+			   created_date,
+			   reservation_id,
+			   funds_holder,
+			   partial_iin,
+			   status,
+			   message,
+			   partner_id,
+			   supplier_id,
+			   currency,
+			   total_commission,
+			   partner_payment,
+			   bp_payment,
+			   credit_card_fee,
+			   final_amount,
+			   charge_type
+		FROM payment_transaction
+		WHERE reservation_id = #{reservationId}
+		  AND status = #{status}
+	</select>
+
+	<select id="readByChargeTypePartnerIdFundsHolderStatus" resultMap="PaymentTransactionResultMap">
+		SELECT id,
+			   payment_provider,
+			   created_date,
+			   reservation_id,
+			   funds_holder,
+			   partial_iin,
+			   status,
+			   message,
+			   partner_id,
+			   supplier_id,
+			   currency,
+			   total_commission,
+			   partner_payment,
+			   bp_payment,
+			   credit_card_fee,
+			   final_amount,
+			   charge_type
+		FROM payment_transaction
+		WHERE charge_type = #{chargeType}
+		  AND partner_id = #{partnerId}
+		  AND funds_holder = #{fundsHolder}
+		  AND status = #{status}
+	</select>
 
 </mapper>

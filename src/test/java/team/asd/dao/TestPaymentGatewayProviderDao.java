@@ -2,6 +2,8 @@ package team.asd.dao;
 
 import team.asd.entity.PaymentGatewayProvider;
 
+import java.util.List;
+
 public class TestPaymentGatewayProviderDao implements PaymentGatewayProviderDao {
 
 	@Override
@@ -22,5 +24,10 @@ public class TestPaymentGatewayProviderDao implements PaymentGatewayProviderDao 
 	@Override
 	public void delete(Integer id) {
 
+	}
+
+	@Override
+	public List<PaymentGatewayProvider> readByNameAutoPaySupportSplitPayment(Integer supportSplitPayment, Integer autoPay, String name) {
+		return null;
 	}
 }

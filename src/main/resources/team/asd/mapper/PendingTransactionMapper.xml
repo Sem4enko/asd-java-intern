@@ -9,18 +9,18 @@
 		<result property='partialIin' column='partial_iin'/>
 		<result property='chargeDate' column='charge_date'/>
 		<result property='chargeAmount' column='charge_amount'/>
-		<result property='status' column='status' typeHandler="team.asd.handler.PendingTransactionStatusHandler" />
+		<result property='status' column='status' typeHandler="team.asd.handler.PendingTransactionStatusHandler"/>
 		<result property='version' column='version'/>
 	</resultMap>
 
 	<select id="readById" parameterType="int" resultMap="PendingTransactionResultMap">
-		SELECT id,reservation_id,partial_iin,charge_date,charge_amount,status,version
+		SELECT id, reservation_id, partial_iin, charge_date, charge_amount, status, version
 		FROM pending_transaction
 		WHERE id = #{id}
 	</select>
 
 	<insert id="create" parameterType="team.asd.entity.PendingTransaction" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO pending_transaction(reservation_id,partial_iin,charge_date,charge_amount,status)
+		INSERT INTO pending_transaction(reservation_id, partial_iin, charge_date, charge_amount, status)
 		VALUES (#{reservationId}, #{partialIin}, #{chargeDate}, #{chargeAmount}, #{status})
 	</insert>
 
@@ -37,7 +37,35 @@
 	</update>
 
 	<delete id="delete" parameterType="int">
-		DELETE FROM pending_transaction WHERE id = #{id}
+		DELETE
+		FROM pending_transaction
+		WHERE id = #{id}
 	</delete>
+
+	<insert id="createList" parameterType="java.util.List">
+		INSERT INTO pending_transaction(reservation_id,partial_iin,charge_date,charge_amount,status)
+		VALUES
+		<foreach collection="list" item="element" index="index" open="(" separator="),(" close=")">
+			#{element.reservationId},
+			#{element.partialIin},
+			#{element.chargeDate},
+			#{element.chargeAmount},
+			#{element.status}
+		</foreach>
+	</insert>
+
+	<select id="readByReservationIdStatus" resultMap="PendingTransactionResultMap">
+		SELECT id, reservation_id, partial_iin, charge_date, charge_amount, status
+		FROM pending_transaction
+		WHERE reservation_id = #{reservationId}
+		  AND status = #{status}
+	</select>
+
+	<select id="readByDateRange" resultMap="PendingTransactionResultMap">
+		SELECT id, reservation_id, partial_iin, charge_date, charge_amount, status
+		FROM pending_transaction
+		WHERE from_date <![CDATA[ >= ]]> #{fromDate}
+		  and to_date <![CDATA[ < ]]> #{toDate}
+	</select>
 
 </mapper>

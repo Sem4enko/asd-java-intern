@@ -5,6 +5,9 @@ import org.springframework.stereotype.Repository;
 import team.asd.entity.PendingTransaction;
 import team.asd.mapper.PendingTransactionMapper;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Repository
 @AllArgsConstructor
 public class PendingTransactionDaoImpl implements PendingTransactionDao {
@@ -28,5 +31,20 @@ public class PendingTransactionDaoImpl implements PendingTransactionDao {
 	@Override
 	public void delete(Integer id) {
 		pendingTransactionMapper.delete(id);
+	}
+
+	@Override
+	public List<PendingTransaction> readByReservationIdStatus(Integer reservationId, Integer status) {
+		return pendingTransactionMapper.readByReservationIdStatus(reservationId, status);
+	}
+
+	@Override
+	public void createList(List<PendingTransaction> pendingTransactions) {
+		pendingTransactionMapper.createList(pendingTransactions);
+	}
+
+	@Override
+	public List<PendingTransaction> readByDateRange(LocalDate fromDate, LocalDate toDate) {
+		return pendingTransactionMapper.readByDateRange(fromDate,toDate);
 	}
 }
