@@ -64,8 +64,8 @@
 	<select id="readByDateRange" resultMap="PendingTransactionResultMap">
 		SELECT id, reservation_id, partial_iin, charge_date, charge_amount, status
 		FROM pending_transaction
-		WHERE from_date <![CDATA[ >= ]]> #{fromDate}
-		  and to_date <![CDATA[ < ]]> #{toDate}
+		WHERE charge_date <![CDATA[ >= ]]> #{fromDate}
+		  and charge_date <![CDATA[ <= ]]> #{toDate}
 	</select>
 
 </mapper>
