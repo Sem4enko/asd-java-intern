@@ -55,18 +55,17 @@ public class PendingTransactionService {
 	}
 
 	public List<PendingTransaction> readByDateRange(String stringFromDate, String stringToDate) {
-		//if (ObjectUtils.anyNull(stringFromDate, stringToDate)) {
-			if(StringUtils.isAnyBlank(stringFromDate,stringToDate)){
+		if (StringUtils.isAnyBlank(stringFromDate, stringToDate)) {
 			throw new ValidationException("Required parameters are not provided");
 		}
 
 		LocalDate fromDate = PendingTransactionConverterUtil.convertStringToLocalDate(stringFromDate);
 		LocalDate toDate = PendingTransactionConverterUtil.convertStringToLocalDate(stringToDate);
 
-//		if (Objects.requireNonNull(fromDate)
-//				.isAfter(Objects.requireNonNull(toDate))) {
-//			throw new ValidationException("Required parameters are not provided");
-//		}
+		if (Objects.requireNonNull(fromDate)
+				.isAfter(Objects.requireNonNull(toDate))) {
+			throw new ValidationException("Invalid parameters are provided");
+		}
 		return pendingTransactionDao.readByDateRange(fromDate, toDate);
 	}
 
