@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/payment_transaction")
 @AllArgsConstructor
+@ApiOperation("Payment Transaction Api")
 public class PaymentTransactionController {
 	private final PaymentTransactionService paymentTransactionService;
 

@@ -36,10 +36,18 @@ public class PaymentGatewayProviderService {
 	}
 
 	public List<PaymentGatewayProvider> readByNameAutoPaySupportSplitPayment(Integer supportSplitPayment, Integer autoPay, String name) {
-		if (ObjectUtils.anyNull(supportSplitPayment,autoPay,name)) {
+		if (ObjectUtils.anyNull(supportSplitPayment, autoPay, name)) {
 			throw new ValidationException("Required parameters are not provided");
 		}
 		return paymentGatewayProviderDao.readByNameAutoPaySupportSplitPayment(supportSplitPayment, autoPay, name);
+	}
+
+	public List<PaymentGatewayProvider> readWithPaymentTransaction(Integer transactionCount) {
+		if (paymentGatewayProviderDao.readWithPaymentTransaction()
+				.size() < transactionCount) {
+			throw new ValidationException("Count of providers is less than transaction count");
+		}
+		return paymentGatewayProviderDao.readWithPaymentTransaction();
 	}
 
 	private void checkId(Integer id) throws ValidationException {

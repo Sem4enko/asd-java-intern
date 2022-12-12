@@ -45,6 +45,11 @@ public class PendingTransactionDaoImpl implements PendingTransactionDao {
 
 	@Override
 	public List<PendingTransaction> readByDateRange(LocalDate fromDate, LocalDate toDate) {
-		return pendingTransactionMapper.readByDateRange(fromDate,toDate);
+		return pendingTransactionMapper.readByDateRange(fromDate, toDate);
+	}
+
+	@Override
+	public List<PendingTransaction> readWithPaymentTransactionByStatusAndChargeDate() {
+		return pendingTransactionMapper.readWithPaymentTransactionByStatusAndChargeDate();
 	}
 }

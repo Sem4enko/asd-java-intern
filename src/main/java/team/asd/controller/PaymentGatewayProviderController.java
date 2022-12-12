@@ -80,4 +80,15 @@ public class PaymentGatewayProviderController {
 				.map(PaymentGatewayProviderConverterUtil::convertToDto)
 				.collect(Collectors.toList()), HttpStatus.OK);
 	}
+
+	@ApiOperation(value = "Get a list of Payment Gateway Providers if count of PaymentTransaction items by PaymentGatewayProvider is not less than transactionCount parameter", notes = "Require transactionCount parameter. Returns a list of matching providers")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved"),
+			@ApiResponse(code = 404, message = "Not found - The provider was not found") })
+	@GetMapping("/list_with_payment_transaction/payment_transaction_count/{transactionCount}")
+	public ResponseEntity<List<PaymentGatewayProviderDto>> readWithPaymentTransaction(@PathVariable(value = "transactionCount") Integer transactionCount) {
+		return new ResponseEntity<>(paymentGatewayProviderService.readWithPaymentTransaction(transactionCount)
+				.stream()
+				.map(PaymentGatewayProviderConverterUtil::convertToDto)
+				.collect(Collectors.toList()), HttpStatus.OK);
+	}
 }

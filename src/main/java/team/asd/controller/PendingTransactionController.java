@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/pending_transaction")
 @AllArgsConstructor
+@ApiOperation("Pending Transaction Api")
 public class PendingTransactionController {
 	private final PendingTransactionService pendingTransactionService;
 
@@ -107,4 +108,16 @@ public class PendingTransactionController {
 				.map(PendingTransactionConverterUtil::convertToDto)
 				.collect(Collectors.toList()), HttpStatus.OK);
 	}
+
+	@ApiOperation(value = "Get a list of Pending Transaction items with status Pending and change_date is in future and Payment Transaction items are not with state Accepted or Confirmed", notes = "Pending Transaction table is joined with Payment Transaction table by reservation_id")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved"),
+			@ApiResponse(code = 404, message = "Not found - The item was not found") })
+	@GetMapping("/list_with_payment_transaction/joined_by_reservation_id")
+	public ResponseEntity<List<PendingTransactionDto>> readWithPaymentTransactionByStatusAndChargeDate() {
+		return new ResponseEntity<>(pendingTransactionService.readWithPaymentTransactionByStatusAndChargeDate()
+				.stream()
+				.map(PendingTransactionConverterUtil::convertToDto)
+				.collect(Collectors.toList()), HttpStatus.OK);
+	}
+
 }

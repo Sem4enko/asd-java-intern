@@ -19,4 +19,6 @@ public interface PendingTransactionDao {
 	void createList(List<PendingTransaction> pendingTransactions);
 
 	List<PendingTransaction> readByDateRange(LocalDate fromDate, LocalDate toDate);
+
+	List<PendingTransaction> readWithPaymentTransactionByStatusAndChargeDate();
 }
