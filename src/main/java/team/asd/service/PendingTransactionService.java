@@ -64,7 +64,7 @@ public class PendingTransactionService {
 
 		if (Objects.requireNonNull(fromDate)
 				.isAfter(Objects.requireNonNull(toDate))) {
-			throw new ValidationException("Required parameters are not provided");
+			throw new ValidationException("Invalid parameters are provided");
 		}
 		return pendingTransactionDao.readByDateRange(fromDate, toDate);
 	}
