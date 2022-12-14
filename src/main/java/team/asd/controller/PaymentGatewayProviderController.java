@@ -1,5 +1,8 @@
 package team.asd.controller;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,14 +28,20 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/payment_gateway_provider")
 @AllArgsConstructor
+@ApiOperation("Payment Gateway Api")
 public class PaymentGatewayProviderController {
 	private final PaymentGatewayProviderService paymentGatewayProviderService;
 
+	@ApiOperation(value = "Get a Payment Gateway Provider by id", notes = "Require integer path variable. Returns a Payment Gateway Provider as per the id")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved"),
+			@ApiResponse(code = 404, message = "Not found - The provider was not found") })
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> getPaymentGatewayProviderById(@PathVariable(value = "id") Integer id) {
 		return new ResponseEntity<>(PaymentGatewayProviderConverterUtil.convertToDto(paymentGatewayProviderService.readById(id)), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Create a new Payment Gateway Provider", notes = "Returns a new Payment Gateway Provider")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully added"), @ApiResponse(code = 404, message = "Invalid parameters were provided") })
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> createPaymentGatewayProvider(@RequestBody @Valid PaymentGatewayProviderDto paymentGatewayProviderDto) {
 		PaymentGatewayProvider paymentGatewayProvider = PaymentGatewayProviderConverterUtil.convertToEntity(paymentGatewayProviderDto);
@@ -40,6 +49,9 @@ public class PaymentGatewayProviderController {
 		return new ResponseEntity<>(PaymentGatewayProviderConverterUtil.convertToDto(paymentGatewayProvider), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Update particular Payment Gateway Provider by id", notes = "Returns an updated Payment Gateway Provider")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully updated"),
+			@ApiResponse(code = 404, message = "Invalid parameters were provided") })
 	@PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> updatePaymentGatewayProvider(@RequestBody @Valid PaymentGatewayProviderDto paymentGatewayProviderDto) {
 		PaymentGatewayProvider paymentGatewayProvider = PaymentGatewayProviderConverterUtil.convertToEntity(paymentGatewayProviderDto);
@@ -47,12 +59,18 @@ public class PaymentGatewayProviderController {
 		return new ResponseEntity<>(PaymentGatewayProviderConverterUtil.convertToDto(paymentGatewayProvider), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Delete Payment Gateway Provider by id", notes = "Require integer path variable. Delete provider from the table")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully deleted"),
+			@ApiResponse(code = 404, message = "Not found - The provider was not found") })
 	@DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> deletePaymentGatewayProvider(@PathVariable(value = "id") Integer id) {
 		paymentGatewayProviderService.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Get a list of Payment Gateway Providers by support split payment , autoPay and name ", notes = "Require support split payment , autoPay and name variables. Returns a list of matching providers")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved"),
+			@ApiResponse(code = 404, message = "Not found - The provider was not found") })
 	@GetMapping("/list/support_split_payment/{supportSplitPayment}/autopay/{autoPay}/name/{name}")
 	public ResponseEntity<List<PaymentGatewayProviderDto>> readByNameAutoPaySupportSplitPayment(
 			@PathVariable(value = "supportSplitPayment") Integer supportSplitPayment, @PathVariable(value = "autoPay") Integer autoPay,

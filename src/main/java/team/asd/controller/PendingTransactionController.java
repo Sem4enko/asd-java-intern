@@ -1,5 +1,8 @@
 package team.asd.controller;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,11 +32,16 @@ import java.util.stream.Collectors;
 public class PendingTransactionController {
 	private final PendingTransactionService pendingTransactionService;
 
+	@ApiOperation(value = "Get a Pending Transaction by id", notes = "Require integer path variable. Returns a Pending Transaction as per the id")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved"),
+			@ApiResponse(code = 404, message = "Not found - The Pending Transaction was not found") })
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> getPendingTransactionById(@PathVariable(value = "id") Integer id) {
 		return new ResponseEntity<>(PendingTransactionConverterUtil.convertToDto(pendingTransactionService.readById(id)), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Create a new Pending Transaction", notes = "Returns a new Pending Transaction")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully added"), @ApiResponse(code = 404, message = "Invalid parameters were provided") })
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> createPendingTransaction(@RequestBody @Valid PendingTransactionDto pendingTransactionDto) {
 		PendingTransaction pendingTransaction = PendingTransactionConverterUtil.convertToEntity(pendingTransactionDto);
@@ -41,6 +49,9 @@ public class PendingTransactionController {
 		return new ResponseEntity<>(PendingTransactionConverterUtil.convertToDto(pendingTransaction), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Update particular Pending Transaction by id", notes = "Returns an updated Pending Transaction")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully updated"),
+			@ApiResponse(code = 404, message = "Invalid parameters were provided") })
 	@PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> updatePendingTransaction(@RequestBody @Valid PendingTransactionDto pendingTransactionDto) {
 		PendingTransaction pendingTransaction = PendingTransactionConverterUtil.convertToEntity(pendingTransactionDto);
@@ -48,12 +59,18 @@ public class PendingTransactionController {
 		return new ResponseEntity<>(PendingTransactionConverterUtil.convertToDto(pendingTransaction), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Delete Pending Transaction by id", notes = "Require integer path variable. Delete Pending Transaction from the table")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully deleted"),
+			@ApiResponse(code = 404, message = "Not found - The Pending Transaction was not found") })
 	@DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> deletePendingTransaction(@PathVariable(value = "id") Integer id) {
 		pendingTransactionService.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Get a list of Pending Transactions by reservation id and status", notes = "Require reservation id and status variables. Returns a list of matching pending transactions")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved"),
+			@ApiResponse(code = 404, message = "Not found - The pending transaction was not found") })
 	@GetMapping("/list/reservation_id/{reservationId}/status/{status}")
 	public ResponseEntity<List<PendingTransactionDto>> readByReservationIdStatus(@PathVariable(value = "reservationId") Integer reservationId,
 			@PathVariable(value = "status") Integer status) {
@@ -63,6 +80,9 @@ public class PendingTransactionController {
 				.collect(Collectors.toList()), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Add several new Pending Transactions to the table", notes = "Returns a list of Pending Transactions")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "List of Pending Transactions successfully created"),
+			@ApiResponse(code = 404, message = "Invalid parameters were provided") })
 	@PostMapping("/list")
 	public ResponseEntity<List<PendingTransactionDto>> createList(@RequestBody List<@Valid PendingTransactionDto> pendingTransactionDtoList) {
 		List<PendingTransaction> pendingTransactions = pendingTransactionDtoList.stream()
@@ -76,6 +96,9 @@ public class PendingTransactionController {
 				.collect(Collectors.toList()), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Get a list of Pending Transactions by date", notes = "Require first date and second date. Returns a list of matching pending transactions")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved"),
+			@ApiResponse(code = 404, message = "Not found - The pending transaction was not found") })
 	@GetMapping("/list_dates")
 	public ResponseEntity<List<PendingTransactionDto>> readByDateRange(@RequestParam(name = "from_date") String fromDate,
 			@RequestParam(name = "to_date") String toDate) {
