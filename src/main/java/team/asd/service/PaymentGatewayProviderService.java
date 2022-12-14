@@ -7,6 +7,7 @@ import team.asd.dao.PaymentGatewayProviderDao;
 import team.asd.entity.PaymentGatewayProvider;
 import team.asd.exception.ValidationException;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -32,6 +33,13 @@ public class PaymentGatewayProviderService {
 	public void delete(Integer id) throws ValidationException {
 		checkId(id);
 		paymentGatewayProviderDao.delete(id);
+	}
+
+	public List<PaymentGatewayProvider> readByNameAutoPaySupportSplitPayment(Integer supportSplitPayment, Integer autoPay, String name) {
+		if (ObjectUtils.anyNull(supportSplitPayment,autoPay,name)) {
+			throw new ValidationException("Required parameters are not provided");
+		}
+		return paymentGatewayProviderDao.readByNameAutoPaySupportSplitPayment(supportSplitPayment, autoPay, name);
 	}
 
 	private void checkId(Integer id) throws ValidationException {

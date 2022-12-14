@@ -18,7 +18,9 @@ import team.asd.service.PaymentGatewayProviderService;
 import team.asd.util.PaymentGatewayProviderConverterUtil;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/payment_gateway_provider")
@@ -49,5 +51,15 @@ public class PaymentGatewayProviderController {
 	public ResponseEntity<Object> deletePaymentGatewayProvider(@PathVariable(value = "id") Integer id) {
 		paymentGatewayProviderService.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@GetMapping("/list/support_split_payment/{supportSplitPayment}/autopay/{autoPay}/name/{name}")
+	public ResponseEntity<List<PaymentGatewayProviderDto>> readByNameAutoPaySupportSplitPayment(
+			@PathVariable(value = "supportSplitPayment") Integer supportSplitPayment, @PathVariable(value = "autoPay") Integer autoPay,
+			@PathVariable(value = "name") String name) {
+		return new ResponseEntity<>(paymentGatewayProviderService.readByNameAutoPaySupportSplitPayment(supportSplitPayment, autoPay, name)
+				.stream()
+				.map(PaymentGatewayProviderConverterUtil::convertToDto)
+				.collect(Collectors.toList()), HttpStatus.OK);
 	}
 }

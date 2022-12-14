@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 import team.asd.entity.PaymentGatewayProvider;
 import team.asd.mapper.PaymentGatewayProviderMapper;
 
+import java.util.List;
+
 @Repository
 @AllArgsConstructor
 public class PaymentGatewayProviderDaoImpl implements PaymentGatewayProviderDao {
@@ -29,4 +31,10 @@ public class PaymentGatewayProviderDaoImpl implements PaymentGatewayProviderDao 
 	public void delete(Integer id) {
 		paymentGatewayProviderMapper.delete(id);
 	}
+
+	@Override
+	public List<PaymentGatewayProvider> readByNameAutoPaySupportSplitPayment(Integer supportSplitPayment, Integer autoPay, String name) {
+		return paymentGatewayProviderMapper.readByNameAutoPaySupportSplitPayment(supportSplitPayment,autoPay,name);
+	}
+
 }
