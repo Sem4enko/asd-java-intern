@@ -40,4 +40,9 @@ public class TestPendingTransactionDao implements PendingTransactionDao{
 	public List<PendingTransaction> readByDateRange(LocalDate fromDate, LocalDate toDate) {
 		return null;
 	}
+
+	@Override
+	public List<PendingTransaction> readWithPaymentTransactionByStatusAndChargeDate() {
+		return null;
+	}
 }

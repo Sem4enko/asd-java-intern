@@ -48,4 +48,12 @@
 		  AND name = #{name}
 	</select>
 
+	<select id="readWithPaymentTransaction" resultMap="PaymentGatewayProviderResultMap">
+		SELECT p1.id , p1.name, p1.fee,p1.autopay, p1.support_split_payment, p1.version
+		FROM payment_gateway_provider p1
+				 INNER JOIN payment_transaction p2 ON p1.id = p2.payment_provider
+		WHERE (p2.status = 'Accepted'
+			OR p2.status = 'Confirmed');
+	</select>
+
 </mapper>

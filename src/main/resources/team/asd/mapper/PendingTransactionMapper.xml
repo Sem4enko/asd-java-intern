@@ -65,7 +65,16 @@
 		SELECT id, reservation_id, partial_iin, charge_date, charge_amount, status
 		FROM pending_transaction
 		WHERE charge_date <![CDATA[ >= ]]> #{fromDate}
-		  and charge_date <![CDATA[ <= ]]> #{toDate}
+		  AND charge_date <![CDATA[ <= ]]> #{toDate}
+	</select>
+
+	<select id="readWithPaymentTransactionByStatusAndChargeDate" resultMap="PendingTransactionResultMap">
+		SELECT p1.id, p1.reservation_id, p1.partial_iin, p1.charge_date, p1.charge_amount, p1.status
+		FROM pending_transaction p1
+				 INNER JOIN payment_transaction p2 ON p1.reservation_id = p2.reservation_id
+		WHERE p1.status = 2
+		  AND p1.charge_date >= CURRENT_DATE()
+		  AND (p2.status != 'Accepted' OR p2.status != 'Confirmed');
 	</select>
 
 </mapper>

@@ -30,4 +30,9 @@ public class TestPaymentGatewayProviderDao implements PaymentGatewayProviderDao 
 	public List<PaymentGatewayProvider> readByNameAutoPaySupportSplitPayment(Integer supportSplitPayment, Integer autoPay, String name) {
 		return null;
 	}
+
+	@Override
+	public List<PaymentGatewayProvider> readWithPaymentTransaction() {
+		return null;
+	}
 }

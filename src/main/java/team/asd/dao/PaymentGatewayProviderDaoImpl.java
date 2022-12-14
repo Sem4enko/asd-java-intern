@@ -37,4 +37,9 @@ public class PaymentGatewayProviderDaoImpl implements PaymentGatewayProviderDao 
 		return paymentGatewayProviderMapper.readByNameAutoPaySupportSplitPayment(supportSplitPayment,autoPay,name);
 	}
 
+	@Override
+	public List<PaymentGatewayProvider> readWithPaymentTransaction() {
+		return paymentGatewayProviderMapper.readWithPaymentTransaction();
+	}
+
 }

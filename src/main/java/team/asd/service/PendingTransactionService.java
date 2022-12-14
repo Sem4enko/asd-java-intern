@@ -69,6 +69,10 @@ public class PendingTransactionService {
 		return pendingTransactionDao.readByDateRange(fromDate, toDate);
 	}
 
+	public List<PendingTransaction> readWithPaymentTransactionByStatusAndChargeDate() {
+		return pendingTransactionDao.readWithPaymentTransactionByStatusAndChargeDate();
+	}
+
 	private void checkId(Integer id) throws ValidationException {
 		if (ObjectUtils.isEmpty(id) || id <= 0) {
 			throw new ValidationException("Wrong id was provided");
