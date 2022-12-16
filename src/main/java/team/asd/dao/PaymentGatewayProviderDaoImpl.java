@@ -6,6 +6,7 @@ import team.asd.entity.PaymentGatewayProvider;
 import team.asd.mapper.PaymentGatewayProviderMapper;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Repository
 @AllArgsConstructor
@@ -34,7 +35,7 @@ public class PaymentGatewayProviderDaoImpl implements PaymentGatewayProviderDao 
 
 	@Override
 	public List<PaymentGatewayProvider> readByNameAutoPaySupportSplitPayment(Integer supportSplitPayment, Integer autoPay, String name) {
-		return paymentGatewayProviderMapper.readByNameAutoPaySupportSplitPayment(supportSplitPayment,autoPay,name);
+		return paymentGatewayProviderMapper.readByNameAutoPaySupportSplitPayment(supportSplitPayment, autoPay, name);
 	}
 
 	@Override
@@ -42,4 +43,15 @@ public class PaymentGatewayProviderDaoImpl implements PaymentGatewayProviderDao 
 		return paymentGatewayProviderMapper.readWithPaymentTransaction();
 	}
 
+	@Override
+	public String threadUpdate(PaymentGatewayProvider paymentGatewayProvider) {
+		try {
+			TimeUnit.SECONDS.sleep(15);
+		} catch (InterruptedException ie) {
+			Thread.currentThread()
+					.interrupt();
+		}
+		paymentGatewayProviderMapper.update(paymentGatewayProvider);
+		return null;
+	}
 }

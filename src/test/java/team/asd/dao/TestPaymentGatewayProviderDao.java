@@ -35,4 +35,9 @@ public class TestPaymentGatewayProviderDao implements PaymentGatewayProviderDao 
 	public List<PaymentGatewayProvider> readWithPaymentTransaction() {
 		return null;
 	}
+
+	@Override
+	public String threadUpdate(PaymentGatewayProvider paymentGatewayProvider) {
+		return null;
+	}
 }

@@ -91,4 +91,13 @@ public class PaymentGatewayProviderController {
 				.map(PaymentGatewayProviderConverterUtil::convertToDto)
 				.collect(Collectors.toList()), HttpStatus.OK);
 	}
+
+	@ApiOperation(value = "Update particular Payment Gateway Provider by id with 15 seconds delay", notes = "Returns an updated Payment Gateway Provider")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully updated"),
+			@ApiResponse(code = 404, message = "Invalid parameters were provided") })
+	@PutMapping(value = "/update_with_delay", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String updateWithDelay(@RequestBody @Valid PaymentGatewayProviderDto paymentGatewayProviderDto) {
+		PaymentGatewayProvider paymentGatewayProvider = PaymentGatewayProviderConverterUtil.convertToEntity(paymentGatewayProviderDto);
+		return paymentGatewayProviderService.updateWithDelay(paymentGatewayProvider);
+	}
 }
