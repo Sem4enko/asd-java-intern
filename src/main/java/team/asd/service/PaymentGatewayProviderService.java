@@ -1,9 +1,9 @@
 package team.asd.service;
 
 import com.antkorwin.xsync.XSync;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team.asd.dao.PaymentGatewayProviderDao;
 import team.asd.entity.PaymentGatewayProvider;
@@ -16,10 +16,10 @@ import java.util.concurrent.Executors;
 
 @Service
 @RequiredArgsConstructor
-@AllArgsConstructor
 public class PaymentGatewayProviderService {
 	private final PaymentGatewayProviderDao paymentGatewayProviderDao;
-	private XSync<Integer> xSync;
+	@Autowired
+	private  XSync<Integer> xSync;
 
 	public PaymentGatewayProvider readById(Integer id) throws ValidationException {
 		checkId(id);
