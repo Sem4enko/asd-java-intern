@@ -1,7 +1,9 @@
 package team.asd.service;
 
-import lombok.AllArgsConstructor;
+import com.antkorwin.xsync.XSync;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team.asd.dao.PaymentGatewayProviderDao;
 import team.asd.entity.PaymentGatewayProvider;
@@ -9,11 +11,15 @@ import team.asd.exception.ValidationException;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PaymentGatewayProviderService {
-	PaymentGatewayProviderDao paymentGatewayProviderDao;
+	private final PaymentGatewayProviderDao paymentGatewayProviderDao;
+	@Autowired
+	private  XSync<Integer> xSync;
 
 	public PaymentGatewayProvider readById(Integer id) throws ValidationException {
 		checkId(id);
@@ -48,6 +54,20 @@ public class PaymentGatewayProviderService {
 			throw new ValidationException("Count of providers is less than transaction count");
 		}
 		return paymentGatewayProviderDao.readWithPaymentTransaction();
+	}
+
+	public String updateWithDelay(PaymentGatewayProvider paymentGatewayProvider) {
+		if (ObjectUtils.isEmpty(paymentGatewayProvider)) {
+			throw new ValidationException("Empty provider was provided");
+		}
+
+		checkId(paymentGatewayProvider.getId());
+
+		xSync.execute(paymentGatewayProvider.getId(), () -> {
+			ExecutorService executorService = Executors.newSingleThreadExecutor();
+			executorService.execute(() -> paymentGatewayProviderDao.threadUpdate(paymentGatewayProvider));
+		});
+		return "Update is in progress.";
 	}
 
 	private void checkId(Integer id) throws ValidationException {

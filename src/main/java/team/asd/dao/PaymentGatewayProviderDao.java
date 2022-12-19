@@ -17,4 +17,6 @@ public interface PaymentGatewayProviderDao {
 	List<PaymentGatewayProvider> readByNameAutoPaySupportSplitPayment(Integer supportSplitPayment, Integer autoPay, String name);
 
 	List<PaymentGatewayProvider> readWithPaymentTransaction();
+
+	String threadUpdate(PaymentGatewayProvider paymentGatewayProvider);
 }
