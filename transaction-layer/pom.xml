@@ -17,24 +17,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-<!--	<profiles>-->
-<!--		<profile>-->
-<!--			<id>dev</id>-->
-<!--			<activation>-->
-<!--				<activeByDefault>true</activeByDefault>-->
-<!--			</activation>-->
-<!--			<properties>-->
-<!--				<spring.profiles.active>dev</spring.profiles.active>-->
-<!--			</properties>-->
-<!--		</profile>-->
-<!--		<profile>-->
-<!--			<id>local</id>-->
-<!--			<properties>-->
-<!--				<spring.profiles.active>local</spring.profiles.active>-->
-<!--			</properties>-->
-<!--		</profile>-->
-<!--	</profiles>-->
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
