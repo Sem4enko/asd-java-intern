@@ -149,7 +149,7 @@
 		charge_type
 		FROM payment_transaction
 		<where>
-			<if test="partnerId != null">partner_id = #{partnerId}</if>
+			partner_id = #{partnerId}
 			<if test="chargeType != null">AND charge_type = #{chargeType},</if>
 			<if test="fundsHolder != null">AND funds_holder = #{fundsHolder},</if>
 			<if test="status != null">AND status = #{status}</if>
