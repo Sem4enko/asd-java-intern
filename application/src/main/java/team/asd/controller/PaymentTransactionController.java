@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import team.asd.dto.PaymentTransactionDto;
 import team.asd.entity.PaymentTransaction;
@@ -103,14 +104,13 @@ public class PaymentTransactionController {
 	@ApiOperation(value = "Get a list of  Payment Transactions by charge type , partner id , funds holder and status ", notes = "Require charge type , partner id , funds holder and status variables. Returns a list of matching payment transactions")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved"),
 			@ApiResponse(code = 404, message = "Not found - The payment transaction was not found") })
-	@GetMapping("/list/charge_type/{chargeType}/partner_id/{partnerId}/funds_holder/{fundsHolder}/status/{status}")
-	public ResponseEntity<List<PaymentTransactionDto>> readByChargeTypePartnerIdFundsHolderStatus(@PathVariable(value = "chargeType") String chargeType,
-			@PathVariable(value = "partnerId") Integer partnerId, @PathVariable(value = "fundsHolder") Integer fundsHolder,
-			@PathVariable(value = "status") String status) {
+	@GetMapping("/list/partner_id/{partnerId}")
+	public ResponseEntity<List<PaymentTransactionDto>> readByChargeTypePartnerIdFundsHolderStatus(@PathVariable(value = "partnerId") Integer partnerId,
+			@RequestParam(name = "chargeType", required = false) String chargeType, @RequestParam(name = "fundsHolder", required = false) Integer fundsHolder,
+			@RequestParam(name = "status", required = false) String status) {
 		return new ResponseEntity<>(paymentTransactionService.readByChargeTypePartnerIdFundsHolderStatus(chargeType, partnerId, fundsHolder, status)
 				.stream()
 				.map(PaymentTransactionConverterUtil::convertToDto)
 				.collect(Collectors.toList()), HttpStatus.OK);
 	}
-
 }
