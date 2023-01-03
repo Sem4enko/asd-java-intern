@@ -44,8 +44,8 @@ public class PaymentTransactionService {
 	}
 
 	public List<PaymentTransaction> readByChargeTypePartnerIdFundsHolderStatus(String chargeType, Integer partnerId, Integer fundsHolder, String status) {
-		if (ObjectUtils.anyNull(fundsHolder, status)) {
-			throw new ValidationException("Required parameters are not provided");
+		if (ObjectUtils.isEmpty(partnerId) ) {
+			throw new ValidationException("Partner id is not provided");
 		}
 		return paymentTransactionDao.readByChargeTypePartnerIdFundsHolderStatus(chargeType, partnerId, fundsHolder, status);
 	}

@@ -106,7 +106,7 @@
 		</foreach>
 	</insert>
 
-	<select id="readByReservationIdStatus"  resultMap="PaymentTransactionResultMap">
+	<select id="readByReservationIdStatus" resultMap="PaymentTransactionResultMap">
 		SELECT id,
 			   payment_provider,
 			   created_date,
@@ -131,27 +131,29 @@
 
 	<select id="readByChargeTypePartnerIdFundsHolderStatus" resultMap="PaymentTransactionResultMap">
 		SELECT id,
-			   payment_provider,
-			   created_date,
-			   reservation_id,
-			   funds_holder,
-			   partial_iin,
-			   status,
-			   message,
-			   partner_id,
-			   supplier_id,
-			   currency,
-			   total_commission,
-			   partner_payment,
-			   bp_payment,
-			   credit_card_fee,
-			   final_amount,
-			   charge_type
+		payment_provider,
+		created_date,
+		reservation_id,
+		funds_holder,
+		partial_iin,
+		status,
+		message,
+		partner_id,
+		supplier_id,
+		currency,
+		total_commission,
+		partner_payment,
+		bp_payment,
+		credit_card_fee,
+		final_amount,
+		charge_type
 		FROM payment_transaction
-		WHERE charge_type = #{chargeType}
-		  AND partner_id = #{partnerId}
-		  AND funds_holder = #{fundsHolder}
-		  AND status = #{status}
+		<where>
+			partner_id = #{partnerId}
+			<if test="chargeType != null">AND charge_type = #{chargeType},</if>
+			<if test="fundsHolder != null">AND funds_holder = #{fundsHolder},</if>
+			<if test="status != null">AND status = #{status}</if>
+		</where>
 	</select>
 
 </mapper>
