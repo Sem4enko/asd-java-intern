@@ -9,7 +9,10 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import team.asd.constant.FundsHolderEnum;
 import team.asd.constant.PaymentTransactionStatus;
+import team.asd.dao.ChannelPartnerDao;
+import team.asd.dao.PartyDao;
 import team.asd.dao.PaymentTransactionDao;
+import team.asd.dao.ReservationDao;
 import team.asd.entity.PaymentTransaction;
 import team.asd.exception.ValidationException;
 
@@ -34,10 +37,17 @@ class PaymentTransactionServiceTest {
 	private static PaymentTransactionService paymentTransactionService;
 	private static PaymentTransaction mockPaymentTransaction;
 
+	@Mock
+	private ReservationDao reservationDao;
+	@Mock
+	private PartyDao partyDao;
+	@Mock
+	private ChannelPartnerDao channelPartnerDao;
+
 	@BeforeEach
 	public void setUp() {
 		MockitoAnnotations.openMocks(this);
-		paymentTransactionService = new PaymentTransactionService(paymentTransactionDao);
+		paymentTransactionService = new PaymentTransactionService(paymentTransactionDao,reservationDao,partyDao,channelPartnerDao );
 		mockPaymentTransaction = null;
 		paymentTransaction = PaymentTransaction.builder()
 				.id(1)

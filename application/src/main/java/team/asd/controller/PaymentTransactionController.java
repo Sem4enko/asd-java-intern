@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import team.asd.dto.PaymentTransactionDto;
+import team.asd.dto.TransactionReservationPartyDto;
 import team.asd.entity.PaymentTransaction;
 import team.asd.service.PaymentTransactionService;
 import team.asd.util.PaymentTransactionConverterUtil;
@@ -113,4 +114,13 @@ public class PaymentTransactionController {
 				.map(PaymentTransactionConverterUtil::convertToDto)
 				.collect(Collectors.toList()), HttpStatus.OK);
 	}
+
+
+	@ApiOperation(value = "Get information about transaction, its reservation and party by transaction id", notes = "Returns information about transaction ")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved"), @ApiResponse(code = 400, message = "Wrong id was provided") })
+	@GetMapping("/transaction-reservation-party/{id}")
+	public ResponseEntity<TransactionReservationPartyDto> getTransactionReservationPartyDtoById(@PathVariable(value = "id") Integer id) {
+		return new ResponseEntity<> (paymentTransactionService.readTransactionReservationPartyDtoById(id), HttpStatus.OK);
+	}
+
 }
