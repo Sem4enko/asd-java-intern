@@ -30,13 +30,11 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 class PaymentTransactionServiceTest {
-
 	@Mock
 	private PaymentTransactionDao paymentTransactionDao;
 	private PaymentTransaction paymentTransaction;
 	private static PaymentTransactionService paymentTransactionService;
 	private static PaymentTransaction mockPaymentTransaction;
-
 	@Mock
 	private ReservationDao reservationDao;
 	@Mock
@@ -47,7 +45,7 @@ class PaymentTransactionServiceTest {
 	@BeforeEach
 	public void setUp() {
 		MockitoAnnotations.openMocks(this);
-		paymentTransactionService = new PaymentTransactionService(paymentTransactionDao,reservationDao,partyDao,channelPartnerDao );
+		paymentTransactionService = new PaymentTransactionService(paymentTransactionDao, reservationDao, partyDao, channelPartnerDao);
 		mockPaymentTransaction = null;
 		paymentTransaction = PaymentTransaction.builder()
 				.id(1)
