@@ -23,7 +23,7 @@ dist/
 
 # Maven
 target/
-dist/
+
 
 # JetBrains IDE
 .idea/
@@ -48,7 +48,4 @@ Thumbs.db
 *.wmv
 
 /data/
-/.github/
-.mvn
-mvnw
-mvnw.cmd
+
